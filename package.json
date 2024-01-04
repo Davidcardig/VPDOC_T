@@ -6,7 +6,8 @@
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:e2e": "npx cypress open"
   },
   "dependencies": {
     "react": "^18.2.0",

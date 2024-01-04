@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
 
+
 // The built directory structure
 //
 // ├─┬─┬ dist
@@ -20,12 +21,18 @@ const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL']
 
 function createWindow() {
   win = new BrowserWindow({
-    icon: path.join(process.env.VITE_PUBLIC, 'electron-vite.svg'),
+    frame: false,
+    icon: './src/ico.ico',
     webPreferences: {
+      nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js'),
     },
+    // Open the DevTools.
+
+
   })
 
+  win.webContents.openDevTools();
   // Test active push message to Renderer-process.
   win.webContents.on('did-finish-load', () => {
     win?.webContents.send('main-process-message', (new Date).toLocaleString())
@@ -37,6 +44,8 @@ function createWindow() {
     // win.loadFile('dist/index.html')
     win.loadFile(path.join(process.env.DIST, 'index.html'))
   }
+
+
 }
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -56,5 +65,7 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+
 
 app.whenReady().then(createWindow)
