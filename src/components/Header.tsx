@@ -25,20 +25,20 @@ function Header() {
                             <div className="hidden md:block">
                                 <div className="ml-10 flex items-baseline space-x-4">
 
-                                    <Link to="/VPdesk" className="flex items-center text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
+                                    <Link to="/VPdesk" className="border-light-effect flex items-center text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
                                         <img src={VPDesk} alt="VPdesk" className="w-8 h-8 mr-2" />VPdesk
                                     </Link>
 
-                                    <Link to="/VPportal" className="flex items-center text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
+                                    <Link to="/VPportal" className="light-effect flex items-center text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
                                         <img src={VPPortal} alt="VPportal" className="w-8 h-8 mr-2" />
                                         VPportal
                                     </Link>
 
-                                    <Link to="/VPGO" className="flex items-center text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
+                                    <Link to="/VPGO" className="light-effect flex items-center text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
                                         <img src={VPGO} alt="VPGO" className="w-8 h-8 mr-2" />
                                         VPGO
                                     </Link>
-                                    <Link to="/Settings" className="flex justify-end items-end">
+                                    <Link to="/Settings" className="light-effect flex justify-end items-end">
                                         <img src={Settings_logo} alt="Settings" className="h-9 w-9" />
                                     </Link>
 

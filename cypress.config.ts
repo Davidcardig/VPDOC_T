@@ -7,6 +7,7 @@ export default defineConfig({
       // implement node event listeners here
     },
     testIsolation: false,
+    baseUrl: "http://127.0.0.1:5173/"
   },
 
   component: {
