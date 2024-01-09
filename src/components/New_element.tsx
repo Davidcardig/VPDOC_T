@@ -2,6 +2,7 @@
 
 const New_element = () => {
     return (
+
         <div>
             <div className="bg-blue-900 text-center py-4 lg:px-4">
                 <div className="p-2 bg-blue-800 items-center text-blue-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
