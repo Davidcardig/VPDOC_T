@@ -1,6 +1,8 @@
 
 import Card from "../components/Card.tsx";
+import PageData from "../api/Models/PageData.tsx";
 const Accueil = () => {
+
 
 
     return (
@@ -15,6 +17,7 @@ const Accueil = () => {
                     <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
 
                             < Card />
+                        <PageData slug={"accueil"}/>
                     </div>
                 </main>
             </div>
