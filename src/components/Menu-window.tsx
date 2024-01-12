@@ -7,7 +7,7 @@ const MenuWindow = () => {
     return (
         <div>
             <div>
-                <div className="menuwindow min-w-full">
+                <div className=" menuwindow min-w-full">
                     <nav className=" bg-gray-900 draggable mb-0.5">
                         <div className="sm:px-6">
                             <div className="flex items-center justify-between h-8">

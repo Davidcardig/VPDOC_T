@@ -1,5 +1,6 @@
 import  { Component } from 'react';
 import DOMPurify from 'dompurify';
+import { JSX } from 'react/jsx-runtime';
 
 interface PageDataProps {
     slug: string;
@@ -26,18 +27,41 @@ class PageData extends Component<PageDataProps, PageDataState> {
         };
     }
 
-    modifyH4Elements = (htmlString: string): string => {
+    // This method will be used in the render method to create the cards
+    createCardsFromContent = (htmlContent: string) => {
         const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlString, 'text/html');
-        const h4Elements = doc.querySelectorAll('h4');
+        const doc = parser.parseFromString(htmlContent, 'text/html');
+        const sections: JSX.Element[] = [];
 
-        h4Elements.forEach(h4 => {
-            h4.style.color = 'blue'; // Exemple de modification
-            h4.classList.add('ma-classe-personnalisee');
+        // Iterate over each h4 element
+        doc.querySelectorAll('h4').forEach((h4) => {
+            // Find all the content that follows the h4 until the next h4
+            let sibling = h4.nextElementSibling;
+            const content = [];
+            while (sibling && sibling.tagName !== 'H4') {
+                content.push(sibling.outerHTML);
+                sibling = sibling.nextElementSibling;
+            }
+
+            // Create a card component with the h4 as the title and the following content as the body
+            sections.push(
+                <div className="mb-1 justify-center items-center h-screen">
+                    <div className="max-w-sm rounded overflow-hidden shadow-lg">
+                    <img className="w-full" src="https://source.unsplash.com/random/1600x900" alt="Sunset in the mountains">
+                    </img>
+                    <div className="card-header font-bold text-xl mb-2">{h4.textContent}</div>
+                    <div className="card-body">
+                        {/* Here, you would use a Tailwind CSS accordion or dropdown */}
+                        <div className="content" dangerouslySetInnerHTML={{ __html: content.join('') }} />
+                    </div>
+                    </div>
+                </div>
+            );
         });
 
-        return doc.body.innerHTML;
+        return sections;
     };
+
 
     cleanContent = (content: string): string => {
         let cleanedContent = content;
@@ -58,6 +82,7 @@ class PageData extends Component<PageDataProps, PageDataState> {
             cleanedContent = cleanedContent.replace(pattern, '');
         });
 
+        cleanedContent = cleanedContent.replace(/<img[^>]*class="wp-image-[^"]*"[^>]*>/g, '');
         return cleanedContent;
     }
 
@@ -71,8 +96,8 @@ class PageData extends Component<PageDataProps, PageDataState> {
             })
             .then(data => {
                 if (data && data.length > 0) {
-                    let content = this.cleanContent(data[0].content.rendered);
-                    content = this.modifyH4Elements(content); // Appliquer les modifications aux éléments h4
+                    const content = this.cleanContent(data[0].content.rendered);
+
 
                     // Utilisez le contenu modifié ici
                     const cleanedData = {
@@ -107,10 +132,12 @@ class PageData extends Component<PageDataProps, PageDataState> {
             return <div>Page not found</div>;
         }
 
+        // Use the new method to create cards from the page content
+        const cards = this.createCardsFromContent(pageData.content.rendered);
+
         return (
             <div>
-                <h3 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">{pageData.title.rendered}</h3>
-                <div dangerouslySetInnerHTML={{ __html: pageData.content.rendered }} />
+                {cards}
             </div>
         );
     }
