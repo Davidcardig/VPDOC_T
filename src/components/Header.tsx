@@ -73,8 +73,6 @@ function Header() {
                     </div>
                 </div>
             </nav>
-
-
                 <New_element />
         </div>
     </div>

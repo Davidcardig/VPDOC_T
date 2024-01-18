@@ -1,30 +1,34 @@
+import { JSX } from 'react/jsx-runtime';
+export class Card {
 
+    public createCardsFromContentH4(htmlContent: string): JSX.Element[] {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlContent, 'text/html');
+        const sections: JSX.Element[] = [];
 
-const Card = () => {
-    return (
-        <div>
+        doc.querySelectorAll('h4').forEach((h4) => {
+            let sibling = h4.nextElementSibling;
+            const content: string[] = [];
+            while (sibling && sibling.tagName !== 'H4') {
+                content.push(sibling.outerHTML);
+                sibling = sibling.nextElementSibling
+            }
+            sections.push(
 
-            <div className="flex justify-center items-center h-screen">
-                <div className="max-w-sm rounded overflow-hidden shadow-lg">
-                    <img className="w-full" src="https://source.unsplash.com/random/1600x900" alt="Sunset in the mountains">
-                    </img>
-                        <div className="px-6 py-4">
-                            <div className="font-bold text-xl mb-2">The Coldest Sunset</div>
-                            <p className="text-gray-700 text-base">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
-                            </p>
+                <div className="mb-1 justify-center items-center h-screen">
+                    <div className=" flex flex-col items-center bg-white border border-gray-100 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                        <div className="flex border-b-black-300 border-b-2 border-black rounded-lg md:rounded-none md:rounded-l-lg">
+                            <img className="w-1/3" src="https://source.unsplash.com/random/1600x900" alt="Image"></img>
+                            <div className="card-header font-bold text-xl mb-2 ml-4 mt-10 flex-1">{h4.textContent}</div>
                         </div>
-                        <div className="px-6 py-4">
-          <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
-             #photography
-           </span>
-                            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#travel</span>
-                            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">#winter</span>
+                        <div className="card-body">
+                            <div className="content" dangerouslySetInnerHTML={{ __html: content.join('') }} />
                         </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    );
-};
+            );
+        });
 
-export default Card;
+        return sections;
+    }
+}

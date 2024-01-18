@@ -32,7 +32,7 @@ const App = () => {
                 const currentDate = new Date().getTime();
 
                 // Trouver l'index du nouvel article (si existant)
-                const newIndex = articleDates.findIndex((date: { getTime: () => number; }) => date.getTime() == currentDate);
+                const newIndex = articleDates.findIndex((date: { getTime: () => number; }) => date.getTime() < currentDate);
 
                 if (newIndex !== -1) {
                     // Si un nouvel article a été trouvé, mettez à jour l'état
