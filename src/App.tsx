@@ -5,7 +5,7 @@ import Accueil from "./pages/Accueil.jsx";
 import VPdesk from "./pages/VPdesk.jsx";
 import VPportal from "./pages/VPportal.jsx";
 import Vpgo from "./pages/VPGO.jsx";
-
+import ContentPage from "./api/Models/ContentPage.tsx";
 
 function App() {
     return (
@@ -14,7 +14,7 @@ function App() {
             <Header />
             <div>
                 <Routes>
-
+                    <Route path="#/nouvelle-page/:slug" element={<ContentPage />} />
                     <Route path="/" element={<Accueil />} />
                     <Route path="/VPdesk" element={<VPdesk />} />
                     <Route path="/VPportal" element={<VPportal />} />
@@ -22,7 +22,7 @@ function App() {
                 </Routes>
             </div>
         </div>
-    )
+    );
 }
 
-export default App
+export default App;
