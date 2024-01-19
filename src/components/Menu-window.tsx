@@ -1,6 +1,6 @@
 
-import logo from "../assets/img/logo-documentation.png";
-import Settings_logo from "../assets/img/gear-solid.svg";
+import logo from "../assets/img/Logo-Documentation.png";
+import Settings_logo from "../assets/img/Logo-Settings.svg";
 import {Link} from "react-router-dom";
 
 
