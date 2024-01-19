@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, webContents} from 'electron';
+import { app, BrowserWindow, ipcMain} from 'electron';
 import path from 'node:path';
 
 // The built directory structure
