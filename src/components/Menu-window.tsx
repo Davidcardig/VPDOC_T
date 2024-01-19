@@ -1,5 +1,7 @@
 
 import logo from "../assets/img/logo-documentation.png";
+import Settings_logo from "../assets/img/gear-solid.svg";
+import {Link} from "react-router-dom";
 
 
 const MenuWindow = () => {
@@ -20,7 +22,9 @@ const MenuWindow = () => {
                                 </div>
                                 <div className="md:block">
                                     <div className="flex items-center space-x-4 menu-btn z-100">
-
+                                        <Link to="/Settings" className="light-effect flex justify-end items-end">
+                                            <img src={Settings_logo} alt="Settings" className="h-4 w-4" />
+                                        </Link>
                                     <button id="reduceBtn" className="text-gray-300 hover:text-white">&#128469;</button>
                                     <button id="sizeBtn" className="text-gray-300 hover:text-white">&#128471;</button>
                                     <button id="closeBtn" className="text-gray-300 hover:text-white">&#128473;</button>

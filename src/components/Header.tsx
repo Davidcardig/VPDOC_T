@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
 
 import logo from '/src/assets/img/logo-documentation.png';
-import VPDesk from '/src/assets/img/VPdesk.png';
+import VPDesk from '/src/assets/img/VPdesk.jpg';
 import VPGO from '/src/assets/img/VPgo.png';
-import VPPortal from '/src/assets/img/VPportal.png';
-import Settings_logo from '/src/assets/img/gear-solid.svg';
+import VPPortal from '/src/assets/img/VPportal.jpg';
+
 
 
 
@@ -38,9 +38,7 @@ function Header() {
                                         <img src={VPGO} alt="VPGO" className="w-8 h-8 mr-2" />
                                         VPGO
                                     </Link>
-                                    <Link to="/Settings" className="light-effect flex justify-end items-end">
-                                        <img src={Settings_logo} alt="Settings" className="h-9 w-9" />
-                                    </Link>
+
 
                                 </div>
                             </div>
