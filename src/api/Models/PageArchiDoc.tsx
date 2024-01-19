@@ -1,4 +1,5 @@
-import { Component } from 'react';
+import { Component, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal} from 'react';
+import {Link} from "react-router-dom";
 
 interface PageDataProps {
     slug: string;
@@ -48,36 +49,38 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
                     });
                     this.extractSlugsFromContent(data[0].content.rendered);
                 } else {
-                    this.setState({ isLoading: false });
+                    this.setState({isLoading: false});
                 }
             })
             .catch(error => {
-                this.setState({ error: error.message, isLoading: false });
+                this.setState({error: error.message, isLoading: false});
             });
     }
-
 
 
     extractSlugsFromContent(htmlContent: string) {
         const parser = new DOMParser();
         const doc = parser.parseFromString(htmlContent, 'text/html');
         const anchors = doc.querySelectorAll('a');
-        const slugs = Array.from(anchors).map(anchor => {
+        const links = Array.from(anchors).map(anchor => {
             const slug = this.extractSlugFromHref(anchor.getAttribute('href'));
+            const linkText = anchor.textContent;
             if (slug) {
                 anchor.setAttribute('href', `/nouvelle-page/${slug}`); // Remplacer par un nouveau lien
             }
-            return slug;
-        }).filter((slug): slug is string => slug !== null);
+            return {slug, linkText};
+        }).filter((link): link is { slug: string, linkText: string } => link.slug !== null);
 
-        this.setState({ slugs });
+        this.setState({links});
 
         // Mettre à jour le contenu rendu
         const newHtmlContent = doc.body.innerHTML;
         this.setState(prevState => ({
-            pageData: prevState.pageData ? { ...prevState.pageData, content: { ...prevState.pageData.content, rendered: newHtmlContent }} : null
+            pageData: prevState.pageData ? {
+                ...prevState.pageData,
+                content: {...prevState.pageData.content, rendered: newHtmlContent}
+            } : null
         }));
-
 
     }
 
@@ -89,7 +92,7 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
 
 
     render() {
-        const { isLoading, error, pageData, slugs } = this.state;
+        const {isLoading, error, pageData, links} = this.state;
         if (isLoading) {
             return <div>Loading...</div>;
         }
@@ -104,20 +107,15 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
 
         return (
             <div>
-                <h1>{pageData.title.rendered}</h1>
-                <div dangerouslySetInnerHTML={{ __html: pageData.content.rendered }} />
                 <div>
-                    <h1>{pageData.title.rendered}</h1>
-                    <div dangerouslySetInnerHTML={{ __html: pageData.content.rendered }} />
-                    <div>
-                        <h2>Slugs récupérés :</h2>
-                        <ul>
-                            {slugs.map((slug, index) => <li key={index}>{slug}</li>)}
-                        </ul>
-                    </div>
+                    <ul>
+                        {links.map((link: {
+                            slug: any;
+                            linkText: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined;
+                        }, index: Key | null | undefined) =>  <li key={index}>  <Link to={`/nouvelle-page/${link.slug}`}>{link.linkText}</Link></li>)}
+                    </ul>
                 </div>
             </div>
-
         );
     }
 }
