@@ -1,7 +1,7 @@
 import  { Component } from 'react';
 import DOMPurify from 'dompurify';
 import { Card } from "../../components/Card";
-import {CleanApi} from "../../CleanApi.tsx";
+import {CleanApi} from "../../services/CleanApi.tsx";
 
 interface PageDataProps {
 

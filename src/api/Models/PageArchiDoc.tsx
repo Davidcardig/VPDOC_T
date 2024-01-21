@@ -1,6 +1,8 @@
-import { Component, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal} from 'react';
-import {Link} from "react-router-dom";
-
+import { Component } from 'react';
+import { Link } from "react-router-dom";
+import {SlugFromContent} from "../../services/SlugFromContent.tsx";
+import {CleanApi} from "../../services/CleanApi.tsx";
+import DOMPurify from 'dompurify';
 interface PageDataProps {
     slug: string;
 }
@@ -14,10 +16,12 @@ interface PageDataState {
     pageData: PageContent | null;
     isLoading: boolean;
     error: string | null;
-    slugs: string[]; // Ajout d'une propriété pour les slugs
+    links: { slug: string, linkText: string }[]; // Uniformisation de la propriété
 }
 
 class PageArchiDoc extends Component<PageDataProps, PageDataState> {
+    private slugInstance: SlugFromContent;
+    private cleanInstance: CleanApi;
 
     constructor(props: PageDataProps) {
         super(props);
@@ -25,8 +29,32 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
             pageData: null,
             isLoading: true,
             error: null,
-            slugs: [] // Initialisation des slugs
+            links: [] // Initialisation des liens
         };
+
+        this.slugInstance = new SlugFromContent(
+            (links) => {
+                this.setState({ links });
+            },
+            (content) => {
+                this.setState((prevState) => {
+                    if (prevState.pageData) {
+                        return {
+                            pageData: {
+                                ...prevState.pageData,
+                                content: {
+                                    ...prevState.pageData.content,
+                                    rendered: content
+                                }
+                            }
+                        };
+                    }
+                    return null;
+                });
+            }
+        );
+        this.cleanInstance = new CleanApi();
+
     }
 
     componentDidMount() {
@@ -46,8 +74,20 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
                     this.setState({
                         pageData: data[0],
                         isLoading: false
+
                     });
-                    this.extractSlugsFromContent(data[0].content.rendered);
+                    this.slugInstance.extractSlugsFromContent(data[0].content.rendered);
+                    const content = this.cleanInstance.cleanContent(data[0].content.rendered);
+
+                    const cleanedData = {
+                        ...data[0],
+                        content: {
+                            ...data[0].content,
+                            rendered: DOMPurify.sanitize(content, { USE_PROFILES: { html: true } })
+                        }
+                    };
+
+                    this.setState({ pageData: cleanedData, isLoading: false });
                 } else {
                     this.setState({isLoading: false});
                 }
@@ -58,41 +98,9 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
     }
 
 
-    extractSlugsFromContent(htmlContent: string) {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlContent, 'text/html');
-        const anchors = doc.querySelectorAll('a');
-        const links = Array.from(anchors).map(anchor => {
-            const slug = this.extractSlugFromHref(anchor.getAttribute('href'));
-            const linkText = anchor.textContent;
-            if (slug) {
-                anchor.setAttribute('href', `/nouvelle-page/${slug}`); // Remplacer par un nouveau lien
-            }
-            return {slug, linkText};
-        }).filter((link): link is { slug: string, linkText: string } => link.slug !== null);
-
-        this.setState({links});
-
-        // Mettre à jour le contenu rendu
-        const newHtmlContent = doc.body.innerHTML;
-        this.setState(prevState => ({
-            pageData: prevState.pageData ? {
-                ...prevState.pageData,
-                content: {...prevState.pageData.content, rendered: newHtmlContent}
-            } : null
-        }));
-
-    }
-
-    extractSlugFromHref(href: string | null): string | null {
-        if (!href) return null;
-        const match = href.match(/\/([a-zA-Z0-9-]+)$/);
-        return match ? match[1] : null;
-    }
-
 
     render() {
-        const {isLoading, error, pageData, links} = this.state;
+        const { isLoading, error, pageData, links } = this.state;
         if (isLoading) {
             return <div>Loading...</div>;
         }
@@ -109,10 +117,11 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
             <div>
                 <div>
                     <ul>
-                        {links.map((link: {
-                            slug: any;
-                            linkText: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined;
-                        }, index: Key | null | undefined) =>  <li key={index}>  <Link to={`/nouvelle-page/${link.slug}`}>{link.linkText}</Link></li>)}
+                        {links.map((link, index) => (
+                            <li key={index}>
+                                <Link to={`/nouvelle-page/${link.slug}`}>{link.linkText}</Link>
+                            </li>
+                        ))}
                     </ul>
                 </div>
             </div>
