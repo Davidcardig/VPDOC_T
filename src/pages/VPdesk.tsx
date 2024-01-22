@@ -1,5 +1,6 @@
 
-import ContentPage from "../api/Models/ContentPage.tsx";
+import PageArchiDoc from "../api/Models/PageArchiDoc.tsx";
+
 
 
 const VPdesk = () => {
@@ -12,7 +13,8 @@ const VPdesk = () => {
             </header>
             <main>
                 <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-                    <ContentPage/>
+
+                    <PageArchiDoc slug="vpdesk" />
 
                 </div>
             </main>

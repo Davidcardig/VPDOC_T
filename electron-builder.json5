@@ -3,9 +3,9 @@
  */
 {
   "$schema": "https://raw.githubusercontent.com/electron-userland/electron-builder/master/packages/app-builder-lib/scheme.json",
-  "appId": "YourAppID",
+  "appId": "VPDOC",
   "asar": true,
-  "productName": "YourAppName",
+  "productName": "VPDOC",
   "directories": {
     "output": "release/${version}"
   },

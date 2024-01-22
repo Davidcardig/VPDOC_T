@@ -2,12 +2,14 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {CleanApi} from "../../services/CleanApi.tsx";
 import DOMPurify from 'dompurify';
+import ImageNameExtractor from "../../services/ImageNameExtractor"
 
 
 
 interface PageContent {
     content: { rendered: string };
     slug: string;
+    title: { rendered: string };
 }
 
 const fetchPageData = async (slug: string | undefined) => {
@@ -36,14 +38,28 @@ const NouvellePage = () => {
     const [data, setData] = useState<PageContent | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [imageUrl, setImageUrl] = useState<string | null>(null); // Ajout d'un nouvel état pour l'URL de l'image
 
     useEffect(() => {
         setIsLoading(true);
         fetchPageData(slug)
             .then(pageData => {
-                setData(pageData);
-                setIsLoading(false);
-
+                if (pageData) {
+                    const extractor = new ImageNameExtractor();
+                    const div = document.createElement('div');
+                    div.innerHTML = pageData.content.rendered;
+                    const cleanedContent = div.textContent || div.innerText || '';
+                    const imageName = extractor.extractImageName(cleanedContent);
+                    extractor.fetchImageData().then((imageUrl: any) => {
+                        if (imageUrl) {
+                            setImageUrl(imageUrl); // Mise à jour de l'état de l'URL de l'image
+                            const img = `<img src="${imageUrl}" />`;
+                            pageData.content.rendered = pageData.content.rendered.replace(`tabindex='0' role='link'>${imageName}`, `tabindex='0' role='link'>${imageName}${img}`);
+                        }
+                        setData(pageData);
+                        setIsLoading(false);
+                    });
+                }
             })
             .catch(error => {
                 console.error(error);
@@ -66,8 +82,9 @@ const NouvellePage = () => {
 
     return (
         <div>
-            <h1>{data.slug}</h1>
+            <h1 className="text-2xl font-bold mb-4">{data.title.rendered}</h1>
             <div dangerouslySetInnerHTML={{ __html: data.content.rendered }} />
+            {imageUrl && <img className="h-auto max-w-lg transition-all duration-300 rounded-lg blur-sm hover:blur-none" src={imageUrl} alt="Extracted" />} {/* Affichage de l'image si l'URL est disponible */}
         </div>
     );
 };
