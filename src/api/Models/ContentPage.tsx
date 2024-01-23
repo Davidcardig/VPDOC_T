@@ -4,8 +4,6 @@ import {CleanApi} from "../../services/CleanApi.tsx";
 import DOMPurify from 'dompurify';
 import ImageNameExtractor from "../../services/ImageNameExtractor"
 
-
-
 interface PageContent {
     content: { rendered: string };
     slug: string;
@@ -29,8 +27,6 @@ const fetchPageData = async (slug: string | undefined) => {
             }
         };
     }
-
-
 };
 
 const NouvellePage = () => {
@@ -38,7 +34,7 @@ const NouvellePage = () => {
     const [data, setData] = useState<PageContent | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [imageUrl, setImageUrl] = useState<string | null>(null); // Ajout d'un nouvel état pour l'URL de l'image
+    const [imageData, setImageData] = useState<{ url: string, title: string }[] | null>(null); // New state for image data
 
     useEffect(() => {
         setIsLoading(true);
@@ -48,17 +44,16 @@ const NouvellePage = () => {
                     const extractor = new ImageNameExtractor();
                     const div = document.createElement('div');
                     div.innerHTML = pageData.content.rendered;
-                    const cleanedContent = div.textContent || div.innerText || '';
-                    const imageName = extractor.extractImageName(cleanedContent);
-                    extractor.fetchImageData().then((imageUrl: any) => {
-                        if (imageUrl) {
-                            setImageUrl(imageUrl); // Mise à jour de l'état de l'URL de l'image
-                            const img = `<img src="${imageUrl}" />`;
-                            pageData.content.rendered = pageData.content.rendered.replace(`tabindex='0' role='link'>${imageName}`, `tabindex='0' role='link'>${imageName}${img}`);
-                        }
-                        setData(pageData);
-                        setIsLoading(false);
-                    });
+                    const imageNames = extractor.extractImageNames(div.innerText);
+                    if (imageNames) {
+                        extractor.fetchImageData().then(imageData => {
+                            if (imageData) {
+                                setImageData(imageData.map((url, index) => ({ url, title: imageNames[index] })));
+                            }
+                        });
+                    }
+                    setData(pageData);
+                    setIsLoading(false);
                 }
             })
             .catch(error => {
@@ -80,13 +75,29 @@ const NouvellePage = () => {
         return <div>Page not found</div>;
     }
 
+    let content = data.content.rendered;
+
+    //clean html content with textcontent
+    const div = document.createElement('div');
+    div.innerHTML = content;
+    content = div.textContent || div.innerText || '';
+    console.log(content);
+
+
+
+    if (imageData) {
+        imageData.forEach(image => {
+            content = content.replace(`title_text= »${image.title} »`, `<img src="${image.url}" alt="${image.title}"/>`);
+        });
+    }
+
     return (
         <div>
-            <h1 className="text-2xl font-bold mb-4">{data.title.rendered}</h1>
-            <div dangerouslySetInnerHTML={{ __html: data.content.rendered }} />
-            {imageUrl && <img className="h-auto max-w-lg transition-all duration-300 rounded-lg blur-sm hover:blur-none" src={imageUrl} alt="Extracted" />} {/* Affichage de l'image si l'URL est disponible */}
+            <h1>{data.title.rendered}</h1>
+            <div dangerouslySetInnerHTML={{ __html: content }} />
         </div>
-    );
-};
+    )
+
+}
 
 export default NouvellePage;

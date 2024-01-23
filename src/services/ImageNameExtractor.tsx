@@ -1,39 +1,46 @@
 class ImageNameExtractor {
-    private imageName: string | null;
+    private imageNames: string[] | null;
 
     constructor() {
-        this.imageName = null;
+        this.imageNames = null;
     }
 
-    extractImageName(message: string): string | null {
-        const regex = /title_text= »(.*?) »/;
-        const match = message.match(regex);
-        if (match && match[1]) {
-            this.imageName = match[1];
-            message = message.replace(regex, '');
+    extractImageNames(message: string): string[] | null {
+        const regex = /title_text= »(.*?) »/g;
+        const matches = [...message.matchAll(regex)];
+        if (matches.length > 0) {
+            this.imageNames = matches.map(match => match[1]);
+            this.imageNames.forEach(imageName => {
+                message = message.replace(`title_text= »${imageName} »`, '');
+            });
         }
-        return this.imageName;
+        return this.imageNames;
     }
 
-    async fetchImageData(): Promise<string | null> {
-        if (!this.imageName) {
+    async fetchImageData(): Promise<string[] | null> {
+        if (!this.imageNames) {
             return null;
         }
 
-        const response = await fetch(`https://www.visual-planning.com/documentation/fr/wp-json/wp/v2/media/?slug=${this.imageName}`);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        if (data && data.length > 0) {
+        const requests = this.imageNames.map(async (imageName) => {
+            const response = await fetch(`https://www.visual-planning.com/documentation/fr/wp-json/wp/v2/media/?slug=${imageName}`);
+            const data = await response.json();
+            if (data) { // Check if data.guid exists
+                console.log(data[0].source_url);
+                return data[0].source_url;
 
-            console.log(data[0].guid.rendered);
+            } else {
+                console.error(`No guid found for imageName: ${imageName}`);
+                return null;
+            }
+        });
 
-            return data[0].guid.rendered;
-
-        }
-        return null;
+        return await Promise.all(requests);
     }
+
+
 }
 
-export default ImageNameExtractor;
+
+
+export default ImageNameExtractor
