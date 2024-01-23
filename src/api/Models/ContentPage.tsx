@@ -80,7 +80,7 @@ const NouvellePage = () => {
     //clean html content with textcontent
     const div = document.createElement('div');
     div.innerHTML = content;
-    content = div.textContent || div.innerText || '';
+     content = div.textContent || div.innerText ;
     console.log(content);
 
 
