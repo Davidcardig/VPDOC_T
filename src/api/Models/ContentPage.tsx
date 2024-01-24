@@ -121,11 +121,11 @@ content = content.replace(/Attention/g, '<span class="font-bold text-red-600 tex
         <div>
         <header className="bg-white shadow">
             <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <div className="text-3xl font-bold tracking-tight text-gray-900"> {data.title.rendered}</div>
+                <div className="text-3xl font-bold tracking-tight text-gray-900" dangerouslySetInnerHTML={{ __html: data.title.rendered }}/>
             </div>
         </header>
         <div>
-            <div className="mb-10 text-wrap hover:text-balance text-left ml-5" dangerouslySetInnerHTML={{ __html: content }} />
+            <div className="mb-10 text-wrap hover:text-balance text-left ml-5 whitespace-normal" dangerouslySetInnerHTML={{ __html: content }} />
         </div>
         </div>
     )

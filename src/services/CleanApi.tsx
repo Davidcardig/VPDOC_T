@@ -14,7 +14,7 @@ export class CleanApi {
             /\[\/et_pb_text\]\[\/et_pb_column\]/g,
             /tabindex='0' role='link'>.*? border_width_all__hover= »1px »\]/g,
             /\[\/et_pb_text\]\[\/et_pb_column\]\[\/et_pb_row\]\[\/et_pb_section\]/g,
-            /\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_image\]/g,/\[\/et_pb_text\]\[\/et_pb_divider]\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,
+            /\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_image\]/g,/\[\/et_pb_text\]\[\/et_pb_divider]\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g
         ];
 
 
