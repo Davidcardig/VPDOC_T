@@ -10,7 +10,7 @@ import New_element from "./components/New_element.tsx";
 
 function App() {
     return (
-        <div>
+        <div >
             <MenuWindow />
             <Header />
             <New_element />

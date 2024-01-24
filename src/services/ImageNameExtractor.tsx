@@ -33,6 +33,7 @@ class ImageNameExtractor {
                 console.error(`No guid found for imageName: ${imageName}`);
                 return null;
             }
+
         });
 
         return await Promise.all(requests);

@@ -19,3 +19,25 @@
     position: fixed;
 }
 
+h3{
+    margin-top: 25px;
+    border-top: 3px solid #e2e8f0;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 2rem;
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+    text-align: center;
+  margin-bottom: 15px;
+
+}
+
+p img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 30%;
+}
+

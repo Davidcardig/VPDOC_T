@@ -20,6 +20,7 @@ export class SlugFromContent {
         const links = Array.from(anchors).map(anchor => {
             const slug = this.extractSlugFromHref(anchor.getAttribute('href'));
             const linkText = anchor.textContent || ''; // Assurez-vous que linkText est toujours une chaîne
+
             if (slug) {
                 anchor.setAttribute('href', `/nouvelle-page/${slug}`);
             }
@@ -31,6 +32,10 @@ export class SlugFromContent {
         // Mettre à jour le contenu rendu
         const newHtmlContent = doc.body.innerHTML;
         this.updateContent(newHtmlContent);
+
+
+
+
     }
 
 }
