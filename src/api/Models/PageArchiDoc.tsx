@@ -16,7 +16,7 @@ interface PageDataState {
     pageData: PageContent | null;
     isLoading: boolean;
     error: string | null;
-    links: { slug: string, linkText: string }[]; // Uniformisation de la propriété
+    links: { slug: string, linkText: string }[];
 }
 
 class PageArchiDoc extends Component<PageDataProps, PageDataState> {
@@ -36,22 +36,6 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
             (links) => {
                 this.setState({ links });
             },
-            (content) => {
-                this.setState((prevState) => {
-                    if (prevState.pageData) {
-                        return {
-                            pageData: {
-                                ...prevState.pageData,
-                                content: {
-                                    ...prevState.pageData.content,
-                                    rendered: content
-                                }
-                            }
-                        };
-                    }
-                    return null;
-                });
-            }
         );
         this.cleanInstance = new CleanApi();
 
@@ -77,6 +61,7 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
 
                     });
                     this.slugInstance.extractSlugsFromContent(data[0].content.rendered);
+
                     const content = this.cleanInstance.cleanContent(data[0].content.rendered);
 
                     const cleanedData = {
@@ -106,6 +91,7 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
 
     render() {
         const { isLoading, error, pageData, links } = this.state;
+        console.log(links);
         if (isLoading) {
             return <div className="text-center relative mt-[100px]">
                 <div role="status">

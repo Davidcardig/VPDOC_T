@@ -4,13 +4,16 @@ import {CleanApi} from "../../services/CleanApi.tsx";
 import DOMPurify from 'dompurify';
 import ImageNameExtractor from "../../services/ImageNameExtractor"
 
+
 interface PageContent {
     content: { rendered: string };
     slug: string;
     title: { rendered: string };
+    links: { slug: string, linkText: string }[];
 }
 
 const fetchPageData = async (slug: string | undefined) => {
+
     const response = await fetch(`https://www.visual-planning.com/documentation/fr/wp-json/wp/v2/pages/?slug=${slug}`);
     if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -18,14 +21,22 @@ const fetchPageData = async (slug: string | undefined) => {
     const data = await response.json();
     if (data && data.length > 0) {
         const cleanInstance = new CleanApi();
+
         const content = cleanInstance.cleanContent(data[0].content.rendered);
+        console.log(content);
         return {
             ...data[0],
             content: {
                 ...data[0].content,
                 rendered: DOMPurify.sanitize(content, { USE_PROFILES: { html: true } })
-            }
+            },
+
+
         };
+
+
+
+
     }
 };
 
@@ -56,6 +67,8 @@ const NouvellePage = () => {
                     }
                     setData(pageData);
                     setIsLoading(false);
+
+
                 }
             })
             .catch(error => {
@@ -104,16 +117,17 @@ const NouvellePage = () => {
         content = content.replace(tabindexRegex, () => {
             const image = imageData[imageIndex];
             imageIndex = (imageIndex + 1) % imageData.length; // Loop back to the first image when we've used all images
-            return `<img className="" key={index}  src="${image.url}" alt="${image.title}"/>`;
+
+            return `<img  class="img_pagecontent" key={index}  src="${image.url}" alt="${image.title}"/>`;
+
         });
     }
-
-    //efface tous les h2 de content
     content = content.replace(/<h2.*?<\/h2>/g, '');
-    //le mot Attention en gars et en rouge
-content = content.replace(/Attention/g, '<span class="font-bold text-red-600 text-xl">Attention ! </span>');
-
+    content = content.replace(/Attention/g, '<span class="font-bold text-red-600 text-xl">Attention ! </span>');
     div.innerHTML = content;
+
+
+
 
 
 

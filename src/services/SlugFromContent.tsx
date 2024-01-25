@@ -1,10 +1,10 @@
 export class SlugFromContent {
     private updateLinks: (links: { slug: string, linkText: string }[]) => void;
-    private updateContent: (content: string) => void;
+    //private updateContent: (content: string) => void;
 
-    constructor(updateLinks: (links: { slug: string, linkText: string }[]) => void, updateContent: (content: string) => void) {
+    constructor(updateLinks: (links: { slug: string, linkText: string }[]) => void, /*updateContent: (content: string) => void*/) {
         this.updateLinks = updateLinks;
-        this.updateContent = updateContent;
+       // this.updateContent = updateContent;
     }
     extractSlugFromHref(href: string | null): string | null {
         if (!href) return null;
@@ -19,23 +19,17 @@ export class SlugFromContent {
         const anchors = doc.querySelectorAll('a');
         const links = Array.from(anchors).map(anchor => {
             const slug = this.extractSlugFromHref(anchor.getAttribute('href'));
-            const linkText = anchor.textContent || ''; // Assurez-vous que linkText est toujours une chaîne
-
-            if (slug) {
-                anchor.setAttribute('href', `/nouvelle-page/${slug}`);
-            }
+            const linkText = anchor.textContent || ''; // Assure-toi que linkText est toujours une chaîne
             return { slug, linkText };
         }).filter((link): link is { slug: string, linkText: string } => link.slug !== null);
 
+
         this.updateLinks(links);
-
-        // Mettre à jour le contenu rendu
-        const newHtmlContent = doc.body.innerHTML;
-        this.updateContent(newHtmlContent);
-
-
-
+        //const newHtmlContent = doc.body.innerHTML;
+        //this.updateContent(newHtmlContent);
 
     }
+
+
 
 }

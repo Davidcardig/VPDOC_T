@@ -44,6 +44,7 @@ class PageData extends Component<PageDataProps, PageDataState> {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
+
                 return response.json();
             })
             .then(data => {
@@ -52,7 +53,7 @@ class PageData extends Component<PageDataProps, PageDataState> {
                     const content = this.cleanInstance.cleanContent(data[0].content.rendered);
 
 
-                    // Utilisez le contenu modifié ici
+
                     const cleanedData = {
                         ...data[0],
                         content: {
@@ -68,6 +69,7 @@ class PageData extends Component<PageDataProps, PageDataState> {
             .catch(error => {
                 this.setState({ error: error.message, isLoading: false });
             });
+
     }
 
     render() {
@@ -93,8 +95,9 @@ class PageData extends Component<PageDataProps, PageDataState> {
             return <div>Page not found</div>;
         }
 
-        // Use the new method to create cards from the page content
-        const cards = this.cardInstance.createCardsFromContentH4(pageData.content.rendered);
+
+        const cards = this.cardInstance.CardsPageData(pageData.content.rendered);
+
 
         return (
             <div>

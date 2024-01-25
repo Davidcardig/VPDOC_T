@@ -4,7 +4,7 @@ import { SlugFromContent } from '../services/SlugFromContent.tsx';
 
 const App = () => {
     const [newArticles, setNewArticles] = useState<{ name: string, slug: string }[]>([]);
-    const slugInstance = new SlugFromContent(() => {}, () => {});
+    const slugInstance = new SlugFromContent(() => {},);
 
     useEffect(() => {
         const apiUrl = 'https://www.visual-planning.com/documentation/fr/wp-json/wp/v2/pages';

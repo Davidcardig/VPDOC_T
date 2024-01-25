@@ -32,7 +32,7 @@ h3{
 
 }
 
-p img{
+.img_pagecontent{
     display: block;
     margin-left: auto;
     margin-right: auto;
