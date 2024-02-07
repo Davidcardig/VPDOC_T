@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 /* Ajoutez vos propres styles ci-dessous */
 .draggable {
     -webkit-user-select: none;

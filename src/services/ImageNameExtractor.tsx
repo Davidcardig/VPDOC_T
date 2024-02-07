@@ -13,6 +13,7 @@ class ImageNameExtractor {
             //this.imageNames.forEach(imageName => {
                 //message = message.replace(`title_text= »${imageName} »`, '');
             //});
+            console.log(this.imageNames);
         }
         return this.imageNames;
     }
@@ -25,15 +26,12 @@ class ImageNameExtractor {
         const requests = this.imageNames.map(async (imageName) => {
             const response = await fetch(`https://www.visual-planning.com/documentation/fr/wp-json/wp/v2/media/?slug=${imageName}`);
             const data = await response.json();
-            if (data) { // Check if data.guid exists
-
+            if (data && data.length > 0 && data[0].source_url) { // Check if data[0].source_url exists
                 return data[0].source_url;
-
             } else {
-                console.error(`No guid found for imageName: ${imageName}`);
+                console.error(`No source_url found for imageName: ${imageName}`);
                 return null;
             }
-
         });
 
         return await Promise.all(requests);

@@ -124,7 +124,7 @@ const NouvellePage = () => {
     content = DOMPurify.sanitize(div.innerHTML, { USE_PROFILES: { html: true } });
 
     let imageIndex = 0;
-    const tabindexRegex = /'  tabindex='0' role='link'&gt;/g;
+    const tabindexRegex = /et_pb_image/g;
 
     if (imageData) {
         content = content.replace(tabindexRegex, () => {
