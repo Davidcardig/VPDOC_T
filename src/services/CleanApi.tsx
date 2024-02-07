@@ -6,7 +6,7 @@ export class CleanApi {
 
 
         // Supprimer les shortcodes de type [et_pb...]
-        cleanedContent = cleanedContent.replace(/\[et_pb_[^\]]*\]/g, '');
+       cleanedContent = cleanedContent.replace(/\[et_pb_[^\]]*\]/g, '');
 
         // Supprimer des motifs spécifiques supplémentaires
         const patternsToRemove = [
