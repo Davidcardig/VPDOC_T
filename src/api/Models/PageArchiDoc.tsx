@@ -1,8 +1,9 @@
 import { Component } from 'react';
-import { Link } from "react-router-dom";
 import {SlugFromContent} from "../../services/SlugFromContent.tsx";
 import {CleanApi} from "../../services/CleanApi.tsx";
 import DOMPurify from 'dompurify';
+
+
 interface PageDataProps {
     slug: string;
 }
@@ -29,7 +30,7 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
             pageData: null,
             isLoading: true,
             error: null,
-            links: [] // Initialisation des liens
+            links: [] as { slug: string, linkText: string }[],
         };
 
         this.slugInstance = new SlugFromContent(
@@ -38,7 +39,6 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
             },
         );
         this.cleanInstance = new CleanApi();
-
     }
 
     componentDidMount() {
@@ -55,14 +55,9 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
             })
             .then(data => {
                 if (data && data.length > 0) {
-                    this.setState({
-                        pageData: data[0],
-                        isLoading: false
-
-                    });
-                    this.slugInstance.extractSlugsFromContent(data[0].content.rendered);
-
-                    const content = this.cleanInstance.cleanContent(data[0].content.rendered);
+                    let content = this.cleanInstance.cleanContent(data[0].content.rendered);
+                    content = this.slugInstance.extractSlugsFromContent(content);
+                    console.log(content);
 
                     const cleanedData = {
                         ...data[0],
@@ -80,14 +75,7 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
             .catch(error => {
                 this.setState({error: error.message, isLoading: false});
             });
-
-
-
-
-
     }
-
-
 
     render() {
         const { isLoading, error, pageData, links } = this.state;
@@ -112,20 +100,15 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
             return <div>Page not found</div>;
         }
 
-
-
         return (
+
+        <div>
+            <header className="bg-white shadow">
+            </header>
             <div>
-                <div>
-                    <ul className="max-w-xs flex flex-col divide-y divide-gray-200 dark:divide-gray-700">
-                        {links.map((link, index) => (
-                            <li className="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800  hover:text-amber-600 hover:text-lg"  key={index}>
-                                <Link  to={`/nouvelle-page/${link.slug}`}>{link.linkText}</Link>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                <div className="content" dangerouslySetInnerHTML={{ __html: pageData.content.rendered }} />
             </div>
+        </div>
         );
     }
 }

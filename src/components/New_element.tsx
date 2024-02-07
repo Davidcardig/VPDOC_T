@@ -13,7 +13,7 @@ const App = () => {
             .then((response) => response.json())
             .then((data) => {
                 const sevenDaysAgo = new Date();
-                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 80);
 
                 const recentArticles = data.filter((article: { date: string }) => {
                     const articleDate = new Date(article.date);

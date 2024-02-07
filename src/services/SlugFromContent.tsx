@@ -4,30 +4,34 @@ export class SlugFromContent {
 
     constructor(updateLinks: (links: { slug: string, linkText: string }[]) => void, /*updateContent: (content: string) => void*/) {
         this.updateLinks = updateLinks;
-       // this.updateContent = updateContent;
+        // this.updateContent = updateContent;
     }
     extractSlugFromHref(href: string | null): string | null {
         if (!href) return null;
-        const match = href.match(/\/([a-zA-Z0-9-]+)$/);
+        const match = href.match(/\/([a-zA-Z0-9-]+)\/?$/);
         return match ? match[1] : null;
     }
 
 
-    extractSlugsFromContent(htmlContent: string) {
+    extractSlugsFromContent(htmlContent: string): string {
         const parser = new DOMParser();
         const doc = parser.parseFromString(htmlContent, 'text/html');
         const anchors = doc.querySelectorAll('a');
         const links = Array.from(anchors).map(anchor => {
             const slug = this.extractSlugFromHref(anchor.getAttribute('href'));
-            const linkText = anchor.textContent || ''; // Assure-toi que linkText est toujours une chaîne
-            return { slug, linkText };
-        }).filter((link): link is { slug: string, linkText: string } => link.slug !== null);
+            const linkText = anchor.textContent || '';
 
+            // Change href of anchor tags
+            if (slug) {
+                anchor.setAttribute('href', `http://127.0.0.1:5173/#/nouvelle-page/${slug}`);
+            }
 
+            return { slug: slug || '', linkText };
+        });
         this.updateLinks(links);
-        //const newHtmlContent = doc.body.innerHTML;
-        //this.updateContent(newHtmlContent);
 
+        // Return the modified HTML content
+        return doc.body.innerHTML;
     }
 
 

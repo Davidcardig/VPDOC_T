@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams} from 'react-router-dom';
 import {CleanApi} from "../../services/CleanApi.tsx";
 import DOMPurify from 'dompurify';
 import ImageNameExtractor from "../../services/ImageNameExtractor"
+import {SlugFromContent} from "../../services/SlugFromContent.tsx";
+
 
 
 interface PageContent {
@@ -65,6 +67,17 @@ const NouvellePage = () => {
                             }
                         });
                     }
+
+                    const slugFromContent = new SlugFromContent( (links) => {
+                        setData({
+                            ...pageData,
+                            links
+                        });
+
+                    });
+                    slugFromContent.extractSlugsFromContent(pageData.content.rendered);
+
+
                     setData(pageData);
                     setIsLoading(false);
 

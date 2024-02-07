@@ -10,9 +10,9 @@ class ImageNameExtractor {
         const matches = [...message.matchAll(regex)];
         if (matches.length > 0) {
             this.imageNames = matches.map(match => match[1]);
-            this.imageNames.forEach(imageName => {
-                message = message.replace(`title_text= »${imageName} »`, '');
-            });
+            //this.imageNames.forEach(imageName => {
+                //message = message.replace(`title_text= »${imageName} »`, '');
+            //});
         }
         return this.imageNames;
     }
@@ -26,7 +26,7 @@ class ImageNameExtractor {
             const response = await fetch(`https://www.visual-planning.com/documentation/fr/wp-json/wp/v2/media/?slug=${imageName}`);
             const data = await response.json();
             if (data) { // Check if data.guid exists
-                console.log(data[0].source_url);
+
                 return data[0].source_url;
 
             } else {
