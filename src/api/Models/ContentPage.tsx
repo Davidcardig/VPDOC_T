@@ -11,7 +11,7 @@ interface PageContent {
     content: { rendered: string };
     slug: string;
     title: { rendered: string };
-    links: { slug: string, linkText: string }[];
+      links: { slug: string, linkText: string }[];
 }
 
 const fetchPageData = async (slug: string | undefined) => {
@@ -23,14 +23,26 @@ const fetchPageData = async (slug: string | undefined) => {
     const data = await response.json();
     if (data && data.length > 0) {
         const cleanInstance = new CleanApi();
+        const slugInstance = new SlugFromContent(
+            (links) => {
+                console.log(links);
+            },
+        );
+          cleanInstance.cleanContent(data[0].content.rendered);
+         slugInstance.extractSlugsFromContent(data[0].content.rendered);
 
-        const content = cleanInstance.cleanContent(data[0].content.rendered);
+
+
+        const content1 = cleanInstance.cleanContent(data[0].content.rendered)
+        const content = slugInstance.extractSlugsFromContent(data[0].content.rendered);
         console.log(content);
         return {
             ...data[0],
             content: {
                 ...data[0].content,
-                rendered: DOMPurify.sanitize(content, { USE_PROFILES: { html: true } })
+                rendered: DOMPurify.sanitize(content, { USE_PROFILES: { html: true } }),
+                rendered1: DOMPurify.sanitize(content1, { USE_PROFILES: { html: true } })
+
             },
 
 
@@ -56,6 +68,7 @@ const NouvellePage = () => {
         fetchPageData(slug)
             .then(pageData => {
                 if (pageData) {
+
                     const extractor = new ImageNameExtractor();
                     const div = document.createElement('body');
                     div.innerHTML = pageData.content.rendered;
@@ -68,14 +81,6 @@ const NouvellePage = () => {
                         });
                     }
 
-                    const slugFromContent = new SlugFromContent( (links) => {
-                        setData({
-                            ...pageData,
-                            links
-                        });
-
-                    });
-                    slugFromContent.extractSlugsFromContent(pageData.content.rendered);
 
 
                     setData(pageData);
