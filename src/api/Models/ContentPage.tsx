@@ -12,6 +12,7 @@ interface PageContent {
     slug: string;
     title: { rendered: string };
       links: { slug: string, linkText: string }[];
+    slugProp?: string; // Slug si appel composant avec slugProp
 }
 
 const fetchPageData = async (slug: string | undefined) => {
@@ -33,7 +34,7 @@ const fetchPageData = async (slug: string | undefined) => {
 
 
 
-        const content1 = cleanInstance.cleanContent(data[0].content.rendered)
+        //const content = cleanInstance.cleanContent(data[0].content.rendered)
         const content = slugInstance.extractSlugsFromContent(data[0].content.rendered);
         console.log(content);
         return {
@@ -41,7 +42,7 @@ const fetchPageData = async (slug: string | undefined) => {
             content: {
                 ...data[0].content,
                 rendered: DOMPurify.sanitize(content, { USE_PROFILES: { html: true } }),
-                rendered1: DOMPurify.sanitize(content1, { USE_PROFILES: { html: true } })
+                //rendered1: DOMPurify.sanitize(content1, { USE_PROFILES: { html: true } })
 
             },
 
@@ -54,8 +55,9 @@ const fetchPageData = async (slug: string | undefined) => {
     }
 };
 
-const NouvellePage = () => {
-    const { slug } = useParams<{ slug: string }>();
+const NouvellePage = ({ slugProp }: PageContent) => {
+    const { slug: slugParam } = useParams<{ slug: string }>();
+    const slug = slugProp || slugParam;
     const [data, setData] = useState<PageContent | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -64,6 +66,7 @@ const NouvellePage = () => {
 
 
     useEffect(() => {
+        if (!slug) return;
         setIsLoading(true);
         fetchPageData(slug)
             .then(pageData => {
@@ -129,7 +132,8 @@ const NouvellePage = () => {
     content = DOMPurify.sanitize(div.innerHTML, { USE_PROFILES: { html: true } });
 
     let imageIndex = 0;
-    const tabindexRegex = /et_pb_image/g;
+    const tabindexRegex = /\[et_pb_image/g;
+
 
     if (imageData) {
         content = content.replace(tabindexRegex, () => {
