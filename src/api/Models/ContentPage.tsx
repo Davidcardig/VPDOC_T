@@ -23,30 +23,26 @@ const fetchPageData = async (slug: string | undefined) => {
     }
     const data = await response.json();
     if (data && data.length > 0) {
+        //Instance de la classe CleanApi et SlugFromContent
         const cleanInstance = new CleanApi();
         const slugInstance = new SlugFromContent(
             (links) => {
                 console.log(links);
             },
         );
-          cleanInstance.cleanContent(data[0].content.rendered);
-         slugInstance.extractSlugsFromContent(data[0].content.rendered);
 
+        let data_content = data[0].content.rendered;
+        let CleanContent = cleanInstance.cleanContent(data_content);
+        let extractDlug = slugInstance.extractSlugsFromContent(data_content);
+        let Content = CleanContent && extractDlug;
+        Content = DOMPurify.sanitize(Content, { USE_PROFILES: { html: true } });
 
-
-        //const content = cleanInstance.cleanContent(data[0].content.rendered)
-        const content = slugInstance.extractSlugsFromContent(data[0].content.rendered);
-        console.log(content);
         return {
             ...data[0],
             content: {
                 ...data[0].content,
-                rendered: DOMPurify.sanitize(content, { USE_PROFILES: { html: true } }),
-                //rendered1: DOMPurify.sanitize(content1, { USE_PROFILES: { html: true } })
-
+                rendered: Content,
             },
-
-
         };
 
 
@@ -144,15 +140,11 @@ const NouvellePage = ({ slugProp }: PageContent) => {
 
         });
     }
+
     content = content.replace(/<h2.*?<\/h2>/g, '');
     content = content.replace(/Attention/g, '<span class="font-bold text-red-600 text-xl">Attention ! </span>');
     div.innerHTML = content;
-
-
-
-
-
-
+    
     return (
         <div>
         <header className="bg-white shadow">

@@ -16,11 +16,11 @@ function App() {
             <New_element />
             <div>
                 <Routes>
-                    <Route path="/nouvelle-page/:slug" element={<ContentPage />} />
                     <Route path="/" element={<Accueil />} />
                     <Route path="/vpdesk" element={<VPdesk />} />
                     <Route path="/VPportal" element={<VPportal />} />
                     <Route path="/VPGO" element={<Vpgo />} />
+                    <Route path="/nouvelle-page/:slug" element={<ContentPage />} />
                 </Routes>
             </div>
         </div>
