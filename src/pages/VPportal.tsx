@@ -15,9 +15,8 @@ const VPportal = () => {
             </header>
             <main>
                 <div className="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-                    <ContentPage slugProp={"VPportal"}  />
+                    <ContentPage slugProp={"VPportal"}   />
                     <div className="flex justify-around">
-
                         <Link to={"/nouvelle-page/vpportal-parametrage"}><span className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-5">Paramétrage</span></Link>
                         <Link to={"/nouvelle-page/vpportal-utilisation"}><span className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-5">Utilisation</span></Link>
                     </div>

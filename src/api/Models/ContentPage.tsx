@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams} from 'react-router-dom';
-import {CleanApi} from "../../services/CleanApi.tsx";
+//import {CleanApi} from "../../services/CleanApi.tsx";
 import DOMPurify from 'dompurify';
 import ImageNameExtractor from "../../services/ImageNameExtractor"
 import {SlugFromContent} from "../../services/SlugFromContent.tsx";
@@ -12,6 +12,9 @@ interface PageContent {
     slug: string;
     title: { rendered: string };
       links: { slug: string, linkText: string }[];
+}
+
+interface slug {
     slugProp?: string; // Slug si appel composant avec slugProp
 }
 
@@ -24,17 +27,17 @@ const fetchPageData = async (slug: string | undefined) => {
     const data = await response.json();
     if (data && data.length > 0) {
         //Instance de la classe CleanApi et SlugFromContent
-        const cleanInstance = new CleanApi();
+        //const cleanInstance = new CleanApi();
         const slugInstance = new SlugFromContent(
             (links) => {
                 console.log(links);
             },
         );
 
-        let data_content = data[0].content.rendered;
-        let CleanContent = cleanInstance.cleanContent(data_content);
-        let extractDlug = slugInstance.extractSlugsFromContent(data_content);
-        let Content = CleanContent && extractDlug;
+        const data_content = data[0].content.rendered;
+        //const CleanContent = cleanInstance.cleanContent(data_content);
+        const extractDlug = slugInstance.extractSlugsFromContent(data_content);
+        let Content = extractDlug ;
         Content = DOMPurify.sanitize(Content, { USE_PROFILES: { html: true } });
 
         return {
@@ -51,7 +54,7 @@ const fetchPageData = async (slug: string | undefined) => {
     }
 };
 
-const NouvellePage = ({ slugProp }: PageContent) => {
+const NouvellePage = ({ slugProp }: slug) => {
     const { slug: slugParam } = useParams<{ slug: string }>();
     const slug = slugProp || slugParam;
     const [data, setData] = useState<PageContent | null>(null);
@@ -123,7 +126,7 @@ const NouvellePage = ({ slugProp }: PageContent) => {
 
 
     let content = data.content.rendered;
-    let div = document.createElement('div');
+    const div = document.createElement('div');
     div.innerHTML = content;
     content = DOMPurify.sanitize(div.innerHTML, { USE_PROFILES: { html: true } });
 

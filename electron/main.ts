@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain} from 'electron';
+import { app, BrowserWindow} from 'electron';
 import path from 'node:path';
 
 // The built directory structure
@@ -38,33 +38,11 @@ function createWindow() {
   } else {
     win.loadFile(path.join(process.env.DIST, 'index.html'));
   }
+
+
 }
 
-ipcMain.on('reduceApp', () => {
-  console.log('reduceApp');
-  if (win) win.minimize();
-});
 
-ipcMain.on('sizeApp', () => {
-  console.log('sizeApp');
-  if (win) {
-    if (win.isMaximized()) {
-      win.restore();
-    } else {
-      win.maximize();
-    }
-  }
-});
-
-
-
-ipcMain.on('closeApp', () => {
-  console.log('closeApp');
-  if (win) {
-    win.close();
-    win = null;
-  }
-});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

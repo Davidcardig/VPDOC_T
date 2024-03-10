@@ -5,7 +5,13 @@ import {Link} from "react-router-dom";
 
 
 const MenuWindow = () => {
+    const reduceBtn = document.getElementById('reduceBtn')
 
+    reduceBtn?.addEventListener('click', () => {
+        console.log('reduce')
+            window.ipcRenderer.send('reduce-window')
+        }
+    )
 
 
 
