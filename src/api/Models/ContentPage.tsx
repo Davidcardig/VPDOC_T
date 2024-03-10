@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams} from 'react-router-dom';
-//import {CleanApi} from "../../services/CleanApi.tsx";
+import {CleanApi} from "../../services/CleanApi.tsx";
 import DOMPurify from 'dompurify';
 import ImageNameExtractor from "../../services/ImageNameExtractor"
 import {SlugFromContent} from "../../services/SlugFromContent.tsx";
@@ -19,7 +19,6 @@ interface slug {
 }
 
 const fetchPageData = async (slug: string | undefined) => {
-
     const response = await fetch(`https://www.visual-planning.com/documentation/fr/wp-json/wp/v2/pages/?slug=${slug}`);
     if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -27,7 +26,7 @@ const fetchPageData = async (slug: string | undefined) => {
     const data = await response.json();
     if (data && data.length > 0) {
         //Instance de la classe CleanApi et SlugFromContent
-        //const cleanInstance = new CleanApi();
+        const cleanInstance = new CleanApi();
         const slugInstance = new SlugFromContent(
             (links) => {
                 console.log(links);
@@ -35,10 +34,11 @@ const fetchPageData = async (slug: string | undefined) => {
         );
 
         const data_content = data[0].content.rendered;
-        //const CleanContent = cleanInstance.cleanContent(data_content);
-        const extractDlug = slugInstance.extractSlugsFromContent(data_content);
-        let Content = extractDlug ;
+        const CleanContent = cleanInstance.cleanContentPage(data_content);
+        const extractSlug = slugInstance.extractSlugsFromContent(data_content);
+        let Content =  extractSlug && CleanContent;
         Content = DOMPurify.sanitize(Content, { USE_PROFILES: { html: true } });
+        console.log(Content);
 
         return {
             ...data[0],
@@ -46,10 +46,10 @@ const fetchPageData = async (slug: string | undefined) => {
                 ...data[0].content,
                 rendered: Content,
             },
+            CleanContent: CleanContent,
+            extractSlug: extractSlug
+
         };
-
-
-
 
     }
 };

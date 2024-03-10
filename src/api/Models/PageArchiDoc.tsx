@@ -55,7 +55,7 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
             })
             .then(data => {
                 if (data && data.length > 0) {
-                    let content = this.cleanInstance.cleanContent(data[0].content.rendered);
+                    let content = this.cleanInstance.cleanPageArchiDoc(data[0].content.rendered);
                     content = this.slugInstance.extractSlugsFromContent(content);
                     console.log(content);
 

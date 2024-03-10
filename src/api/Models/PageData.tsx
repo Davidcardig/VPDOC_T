@@ -3,6 +3,7 @@ import DOMPurify from 'dompurify';
 import { Card } from "../../components/Card";
 import {CleanApi} from "../../services/CleanApi.tsx";
 
+
 interface PageDataProps {
 
     slug: string;
@@ -50,7 +51,7 @@ class PageData extends Component<PageDataProps, PageDataState> {
             .then(data => {
 
                 if (data && data.length > 0) {
-                    const content = this.cleanInstance.cleanContent(data[0].content.rendered);
+                    const content = this.cleanInstance.cleanPageData(data[0].content.rendered);
 
 
 
