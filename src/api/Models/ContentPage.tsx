@@ -36,8 +36,11 @@ const fetchPageData = async (slug: string | undefined) => {
         const data_content = data[0].content.rendered;
         const CleanContent = cleanInstance.cleanContentPage(data_content);
         const extractSlug = slugInstance.extractSlugsFromContent(data_content);
-        let Content =  extractSlug && CleanContent;
+        let Content =  CleanContent;
+        let Content1 =  extractSlug;
         Content = DOMPurify.sanitize(Content, { USE_PROFILES: { html: true } });
+        Content1 = DOMPurify.sanitize(Content1, { USE_PROFILES: { html: true } });
+
         console.log(Content);
 
         return {
@@ -45,6 +48,7 @@ const fetchPageData = async (slug: string | undefined) => {
             content: {
                 ...data[0].content,
                 rendered: Content,
+                renderer: Content1
             },
             CleanContent: CleanContent,
             extractSlug: extractSlug
@@ -131,7 +135,8 @@ const NouvellePage = ({ slugProp }: slug) => {
     content = DOMPurify.sanitize(div.innerHTML, { USE_PROFILES: { html: true } });
 
     let imageIndex = 0;
-    const tabindexRegex = /\[et_pb_image/g;
+     //const tabindexRegex = /\[et_pb_image/g;
+    const tabindexRegex = /.*nbsp;»\]/g;
 
 
     if (imageData) {

@@ -12,7 +12,8 @@ export class CleanApi {
             /\[\/et_pb_text\]\[\/et_pb_column\]/g,
             /tabindex='0' role='link'>.*? border_width_all__hover= »1px »\]/g,
             /\[\/et_pb_text\]\[\/et_pb_column\]\[\/et_pb_row\]\[\/et_pb_section\]/g,
-            /\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_image\]/g,/\[\/et_pb_text\]\[\/et_pb_divider]\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g
+            /\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_image\]/g,/\[\/et_pb_text\]\[\/et_pb_divider]\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,
+
         ];
         patternsToRemove.forEach(pattern => {
             cleanedPageData = cleanedPageData.replace(pattern, '');
@@ -64,7 +65,8 @@ export class CleanApi {
             /\[\/et_pb_text\]\[\/et_pb_column\]/g,
             /tabindex='0' role='link'>.*? border_width_all__hover= »1px »\]/g,
             /\[\/et_pb_text\]\[\/et_pb_column\]\[\/et_pb_row\]\[\/et_pb_section\]/g,
-            /\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_image\]/g,/\[\/et_pb_text\]\[\/et_pb_divider]\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,/\[et_pb_row _builder_[\s\S]*?\]/g,/\[et_pb_column type=[\s\S]*?\]/g,/\[et_pb_text[\s\S]*?\]/g,/\[et_pb_divider[\s\S]*?\]/g
+            /\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_image\]/g,/\[\/et_pb_text\]\[\/et_pb_divider]\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,/\[\/et_pb_divider\]/g,/\[\/et_pb_code\]/g,/\[\/et_pb_blurb\]/g,/\[\/et_pb_column\]/g,/\[\/et_pb_row\]/g,/\[\/et_pb_section\]/g,/\[\/et_pb_text\]/g,/\[et_pb_row _builder_[\s\S]*?\]/g,/\[et_pb_column type=[\s\S]*?\]/g,/\[et_pb_text[\s\S]*?\]/g,
+            /\[et_pb_divider[\s\S]*?\]/g,/\[et_pb_testimonial[\s\S]*?\]/g,/\[dsm_button button_one_text=[\s\S]*/g,
         ];
 
         patternsToRemove.forEach(pattern => {
