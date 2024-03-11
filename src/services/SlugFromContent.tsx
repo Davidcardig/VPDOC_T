@@ -24,7 +24,7 @@ export class SlugFromContent {
             // Change href of anchor tags
             if (slug) {
                 anchor.setAttribute('href', `http://127.0.0.1:5173/#/nouvelle-page/${slug}`);
-                console.log(anchor);
+
             }
 
             return { slug: slug || '', linkText };

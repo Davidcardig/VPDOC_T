@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useParams} from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 import {CleanApi} from "../../services/CleanApi.tsx";
 import DOMPurify from 'dompurify';
 import ImageNameExtractor from "../../services/ImageNameExtractor"
-import {SlugFromContent} from "../../services/SlugFromContent.tsx";
-
+import {SlugFromContent} from "../../services/SlugFromContent";
 
 
 interface PageContent {
@@ -27,31 +26,18 @@ const fetchPageData = async (slug: string | undefined) => {
     if (data && data.length > 0) {
         //Instance de la classe CleanApi et SlugFromContent
         const cleanInstance = new CleanApi();
-        const slugInstance = new SlugFromContent(
-            (links) => {
-                console.log(links);
-            },
-        );
+
 
         const data_content = data[0].content.rendered;
-        const CleanContent = cleanInstance.cleanContentPage(data_content);
-        const extractSlug = slugInstance.extractSlugsFromContent(data_content);
-        let Content =  CleanContent;
-        let Content1 =  extractSlug;
+        let Content =  cleanInstance.cleanContentPage(data_content);
         Content = DOMPurify.sanitize(Content, { USE_PROFILES: { html: true } });
-        Content1 = DOMPurify.sanitize(Content1, { USE_PROFILES: { html: true } });
-
-        console.log(Content);
 
         return {
             ...data[0],
             content: {
                 ...data[0].content,
-                rendered: Content,
-                renderer: Content1
+                rendered: Content
             },
-            CleanContent: CleanContent,
-            extractSlug: extractSlug
 
         };
 
@@ -74,7 +60,6 @@ const NouvellePage = ({ slugProp }: slug) => {
         fetchPageData(slug)
             .then(pageData => {
                 if (pageData) {
-
                     const extractor = new ImageNameExtractor();
                     const div = document.createElement('body');
                     div.innerHTML = pageData.content.rendered;
@@ -86,13 +71,23 @@ const NouvellePage = ({ slugProp }: slug) => {
                             }
                         });
                     }
+                    const slugExtractor = new SlugFromContent((links) => {
+                        setData((data) => {
+                            if (data) {
+                                return {
+                                    ...data,
+                                    links
+                                };
+                            }
+                            return data;
+                        });
 
-
+                    }
+                    );
+                    pageData.content.rendered = slugExtractor.extractSlugsFromContent(pageData.content.rendered);
 
                     setData(pageData);
                     setIsLoading(false);
-
-
                 }
             })
             .catch(error => {

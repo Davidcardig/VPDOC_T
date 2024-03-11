@@ -10,10 +10,7 @@ class ImageNameExtractor {
         const matches = [...message.matchAll(regex)];
         if (matches.length > 0) {
             this.imageNames = matches.map(match => match[1].replace(/″/g, "'"));//problème de syntaxe de API Wordpress
-            //this.imageNames.forEach(imageName => {
-                //message = message.replace(`title_text= »${imageName} »`, '');
-            //});
-            console.log(this.imageNames);
+
         }
         return this.imageNames;
     }
