@@ -152,6 +152,7 @@ const NouvellePage = ({ slugProp }: slug) => {
         <div>
         <header className="bg-white shadow">
             <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+
                 <div className="text-3xl font-bold tracking-tight text-gray-900" dangerouslySetInnerHTML={{ __html: data.title.rendered }}/>
             </div>
         </header>
