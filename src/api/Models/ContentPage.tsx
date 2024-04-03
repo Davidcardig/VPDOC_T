@@ -10,12 +10,13 @@ interface PageContent {
     content: { rendered: string };
     slug: string;
     title: { rendered: string };
-      links: { slug: string, linkText: string }[];
+    links: { slug: string, linkText: string }[];
 }
 
 interface slug {
     slugProp?: string; // Slug si appel composant avec slugProp
 }
+
 
 const fetchPageData = async (slug: string | undefined) => {
     const response = await fetch(`https://www.visual-planning.com/documentation/fr/wp-json/wp/v2/pages/?slug=${slug}`);
@@ -143,21 +144,25 @@ const NouvellePage = ({ slugProp }: slug) => {
 
         });
     }
-
     content = content.replace(/<h2.*?<\/h2>/g, '');
     content = content.replace(/Attention/g, '<span class="font-bold text-red-600 text-xl">Attention ! </span>');
     div.innerHTML = content;
-    
+
+
+
+
+
+
     return (
         <div>
-        <header className="bg-white shadow">
-            <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <div className="text-3xl font-bold tracking-tight text-gray-900" dangerouslySetInnerHTML={{ __html: data.title.rendered }}/>
+            <header className="bg-white shadow">
+                <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                    <div className="text-3xl font-bold tracking-tight text-gray-900" dangerouslySetInnerHTML={{ __html: data.title.rendered }}/>
+                </div>
+            </header>
+            <div>
+                <div className="mb-10 text-wrap hover:text-balance text-left ml-5 whitespace-normal" dangerouslySetInnerHTML={{ __html: content }} />
             </div>
-        </header>
-        <div>
-            <div className="mb-10 text-wrap hover:text-balance text-left ml-5 whitespace-normal" dangerouslySetInnerHTML={{ __html: content }} />
-        </div>
         </div>
     )
 }

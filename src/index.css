@@ -23,7 +23,7 @@
 h3{
     margin-top: 25px;
     border-top: 3px solid #e2e8f0;
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 500;
     line-height: 2rem;
     letter-spacing: 0.025em;
@@ -40,6 +40,20 @@ h3{
     margin-top: 20px;
     margin-bottom: 20px;
     width: 30%;
+}
+
+dl dt span a {
+    color: black; /* Couleur de texte par défaut */
+    transition: all 0.3s ease; /* Transition fluide */
+}
+
+/* Effet hover */
+dl dt span a:hover {
+    color: blue; /* Changement de couleur du texte en bleu */
+    /*aggrandissement de la taille du texte*/
+    font-size: 1.3em;
+    transition: all 0.3s ease; /* Transition fluide */
+    
 }
 
 
