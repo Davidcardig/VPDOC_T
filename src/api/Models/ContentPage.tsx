@@ -14,8 +14,9 @@ interface PageContent {
 }
 
 interface slug {
-    slugProp?: string; // Slug si appel composant avec slugProp
+    slugProp?: string;// Slug si appel composant avec slugProp
 }
+
 
 
 const fetchPageData = async (slug: string | undefined) => {
@@ -91,7 +92,7 @@ const NouvellePage = ({ slugProp }: slug) => {
                     setIsLoading(false);
                 }
             })
-            .catch(error => {
+            .catch(error => { // Catch any errors and update the error state
                 console.error(error);
                 setError(error.message);
                 setIsLoading(false);

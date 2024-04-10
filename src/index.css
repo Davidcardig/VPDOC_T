@@ -49,7 +49,6 @@ dl dt span a {
 
 /* Effet hover */
 dl dt span a:hover {
-    color: blue; /* Changement de couleur du texte en bleu */
     /*aggrandissement de la taille du texte*/
     font-size: 1.3em;
     transition: all 0.3s ease; /* Transition fluide */

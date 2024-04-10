@@ -6,6 +6,7 @@ import DOMPurify from 'dompurify';
 
 interface PageDataProps {
     slug: string;
+    TextColor: string ;
 }
 
 interface PageContent {
@@ -41,12 +42,10 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
         this.cleanInstance = new CleanApi();
     }
 
-    componentDidMount() {
-        this.fetchPageData(this.props.slug);
-    }
 
-    fetchPageData(slug: string) {
-        fetch(`https://www.visual-planning.com/documentation/fr/wp-json/wp/v2/pages/?slug=${slug}`)
+
+    fetchPageData() {
+        fetch(`https://www.visual-planning.com/documentation/fr/wp-json/wp/v2/pages/?slug=${this.props.slug}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -77,6 +76,11 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
             });
     }
 
+    componentDidMount() {
+        this.fetchPageData();
+    }
+
+
     render() {
         const { isLoading, error, pageData, links } = this.state;
         console.log(links);
@@ -106,6 +110,14 @@ class PageArchiDoc extends Component<PageDataProps, PageDataState> {
             <header className="bg-white shadow">
             </header>
             <div>
+                <style>
+                    {`
+                    dl dt span a:hover {
+    color: ${this.props.TextColor}!important;
+    
+}
+`}
+                </style>
                 <div className="content" dangerouslySetInnerHTML={{ __html: pageData.content.rendered }} />
             </div>
         </div>
