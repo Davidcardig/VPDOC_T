@@ -51,7 +51,7 @@ function createWindow() {
   });
 
 
-  const server = 'https://vpdoc.vercel.app'
+  const server = 'https://hazel-g55lfp3cy-davidcardigs-projects.vercel.app'
   const url = `${server}/update/${process.platform}/${app.getVersion()}`
   autoUpdater.setFeedURL({ url })
   setInterval(() => {
