@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { SlugFromContent } from '../services/SlugFromContent.tsx';
+import { SlugFromContent } from '../Models/SlugFromContent.tsx';
 
 const App = () => {
     const [newArticles, setNewArticles] = useState<{ name: string, slug: string }[]>([]);
     const slugInstance = new SlugFromContent(() => {},);
 
     useEffect(() => {
-        const apiUrl = 'https://www.visual-planning.com/documentation/fr/wp-json/wp/v2/pages';
 
-        fetch(apiUrl)
+        fetch('https://www.visual-planning.com/documentation/fr/wp-json/wp/v2/pages')
             .then((response) => response.json())
             .then((data) => {
                 const sevenDaysAgo = new Date();
@@ -20,7 +19,7 @@ const App = () => {
                     return articleDate > sevenDaysAgo;
                 });
 
-                const recentArticlesData = recentArticles.map((article: { title: { rendered: any; }; link: any; }) => {
+                const recentArticlesData = recentArticles.map((article: { title: { rendered: never; }; link: never; }) => {
                     const slug = slugInstance.extractSlugFromHref(article.link);
                     return {
                         name: article.title.rendered,

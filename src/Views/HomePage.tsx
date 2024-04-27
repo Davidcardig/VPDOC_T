@@ -1,7 +1,8 @@
 import  { Component } from 'react';
 import DOMPurify from 'dompurify';
-import { Card } from "../../components/Card";
-import {CleanApi} from "../../services/CleanApi.tsx";
+import { Card } from "../components/Card.tsx";
+import {CleanPageData} from "../Models/cleanPageData.tsx";
+
 
 
 interface PageDataProps {
@@ -20,9 +21,9 @@ interface PageDataState {
     error: string | null;
 }
 
-class PageData extends Component<PageDataProps, PageDataState> {
+class HomePage extends Component<PageDataProps, PageDataState> {
     private cardInstance: Card;
-    private cleanInstance: CleanApi;
+    private cleanInstance: CleanPageData;
 
     constructor(props: PageDataProps) {
         super(props);
@@ -33,7 +34,7 @@ class PageData extends Component<PageDataProps, PageDataState> {
         };
 
         this.cardInstance = new Card();
-        this.cleanInstance = new CleanApi();
+        this.cleanInstance = new CleanPageData();
 
     }
 
@@ -110,4 +111,4 @@ class PageData extends Component<PageDataProps, PageDataState> {
 
 }
 
-export default PageData;
+export default HomePage;

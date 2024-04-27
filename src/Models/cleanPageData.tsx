@@ -1,4 +1,6 @@
-export class CleanApi {
+export class CleanPageData {
+
+
 
     public cleanPageData = (content: string): string => {
         let cleanedPageData  = content;

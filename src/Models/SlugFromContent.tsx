@@ -1,5 +1,5 @@
 export class SlugFromContent {
-    private updateLinks: (links: { slug: string, linkText: string }[]) => void;
+    private  updateLinks: (links: { slug: string, linkText: string }[]) => void;
     //private updateContent: (content: string) => void;
 
     constructor(updateLinks: (links: { slug: string, linkText: string }[]) => void, /*updateContent: (content: string) => void*/) {

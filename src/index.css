@@ -20,6 +20,13 @@
     position: fixed;
 }
 
+h2{
+
+    font-size: 1.875rem; /* text-3xl */
+    font-weight: 600; /* font-bold */
+    letter-spacing: -0.025em; /* tracking-tight */
+
+}
 h3{
     margin-top: 25px;
     border-top: 3px solid #e2e8f0;

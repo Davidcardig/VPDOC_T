@@ -1,50 +1,31 @@
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
-import {CleanApi} from "../../services/CleanApi.tsx";
+import fetchPageData from "../Models/fetchPage.tsx";
 import DOMPurify from 'dompurify';
-import ImageNameExtractor from "../../services/ImageNameExtractor"
-import {SlugFromContent} from "../../services/SlugFromContent";
+import ImageNameExtractor from "../Models/ImageNameExtractor.tsx"
+import {SlugFromContent} from "../Models/SlugFromContent.tsx";
+import generatePDF, {Options} from "react-to-pdf";
+import DocumentPage from "../Views/DocumentPage.tsx";
 
 
 interface PageContent {
     content: { rendered: string };
     slug: string;
     title: { rendered: string };
-      links: { slug: string, linkText: string }[];
+    links: { slug: string, linkText: string }[];
 }
+
+
 
 interface slug {
     slugProp?: string; // Slug si appel composant avec slugProp
 }
 
-const fetchPageData = async (slug: string | undefined) => {
-    const response = await fetch(`https://www.visual-planning.com/documentation/fr/wp-json/wp/v2/pages/?slug=${slug}`);
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
-    if (data && data.length > 0) {
-        //Instance de la classe CleanApi et SlugFromContent
-        const cleanInstance = new CleanApi();
 
 
-        const data_content = data[0].content.rendered;
-        let Content =  cleanInstance.cleanContentPage(data_content);
-        Content = DOMPurify.sanitize(Content, { USE_PROFILES: { html: true } });
 
-        return {
-            ...data[0],
-            content: {
-                ...data[0].content,
-                rendered: Content
-            },
+const DocumentPageViewModel = ({ slugProp }: slug) => {
 
-        };
-
-    }
-};
-
-const NouvellePage = ({ slugProp }: slug) => {
     const { slug: slugParam } = useParams<{ slug: string }>();
     const slug = slugProp || slugParam;
     const [data, setData] = useState<PageContent | null>(null);
@@ -52,17 +33,15 @@ const NouvellePage = ({ slugProp }: slug) => {
     const [error, setError] = useState<string | null>(null);
     const [imageData, setImageData] = useState<{ url: string, title: string }[] | null>(null); // New state for image data
 
-
-
     useEffect(() => {
         if (!slug) return;
         setIsLoading(true);
         fetchPageData(slug)
-            .then(pageData => {
-                if (pageData) {
+            .then(response => {
+                if (response) {
                     const extractor = new ImageNameExtractor();
                     const div = document.createElement('body');
-                    div.innerHTML = pageData.content.rendered;
+                    div.innerHTML = response.content.rendered;
                     const imageNames = extractor.extractImageNames(div.innerText);
                     if (imageNames) {
                         extractor.fetchImageData().then(imageData => {
@@ -84,9 +63,9 @@ const NouvellePage = ({ slugProp }: slug) => {
 
                     }
                     );
-                    pageData.content.rendered = slugExtractor.extractSlugsFromContent(pageData.content.rendered);
+                    response.content.rendered = slugExtractor.extractSlugsFromContent(response.content.rendered);
 
-                    setData(pageData);
+                    setData(response);
                     setIsLoading(false);
                 }
             })
@@ -139,7 +118,7 @@ const NouvellePage = ({ slugProp }: slug) => {
             const image = imageData[imageIndex];
             imageIndex = (imageIndex + 1) % imageData.length; // Loop back to the first image when we've used all images
 
-            return `<img  class="img_pagecontent" key={index}  src="${image.url}" alt="${image.title}"/>`;
+            return `<img class="img_pagecontent" key={index}  src="${image.url}" alt="${image.title}"/>`;
 
         });
     }
@@ -147,19 +126,27 @@ const NouvellePage = ({ slugProp }: slug) => {
     content = content.replace(/<h2.*?<\/h2>/g, '');
     content = content.replace(/Attention/g, '<span class="font-bold text-red-600 text-xl">Attention ! </span>');
     div.innerHTML = content;
-    
+    const options: Options = {
+        filename:data.title.rendered +'.pdf',
+
+        page: {
+            orientation: "portrait",
+            margin: 10
+
+
+        }
+    };
+
+    const getTargetElement = () => document.getElementById("container");
+
+    const downloadPdf = () => generatePDF(getTargetElement, options);
+
+
     return (
         <div>
-        <header className="bg-white shadow">
-            <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <div className="text-3xl font-bold tracking-tight text-gray-900" dangerouslySetInnerHTML={{ __html: data.title.rendered }}/>
-            </div>
-        </header>
-        <div>
-            <div className="mb-10 text-wrap hover:text-balance text-left ml-5 whitespace-normal" dangerouslySetInnerHTML={{ __html: content }} />
-        </div>
+            <DocumentPage title={data.title.rendered} downloadPdf={downloadPdf} content={content}/>
         </div>
     )
 }
 
-export default NouvellePage;
+export default DocumentPageViewModel;

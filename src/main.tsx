@@ -26,12 +26,11 @@ window.ipcRenderer.on('main-process-message', (_event, message) => {
 
 // Enregistrement du Service Worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('../service-worker.js')
-    .then((registration) => {
-      console.log('Service Worker enregistré avec succès:', registration);
-    })
-    .catch(() => {
-      console.log("Échec de l'enregistrement du Service Worker");
-
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('../service-worker.js').then(function(registration) {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function(err) {
+            console.log('ServiceWorker registration failed: ', err);
+        });
     });
 }

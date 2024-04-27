@@ -7,15 +7,20 @@
     "build": "tsc && vite build && electron-builder",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "test:e2e": "npx cypress open"
+    "start": "electron ."
   },
   "dependencies": {
-    "@react-pdf/renderer": "^3.3.1",
+    "@react-pdf/renderer": "^3.4.2",
+    "axios": "^1.6.8",
     "dompurify": "^3.0.8",
     "idb": "^8.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.1"
+    "react-router-dom": "^6.21.1",
+    "react-to-pdf": "^1.0.1",
+    "workbox-precaching": "^7.0.0",
+    "workbox-routing": "^7.0.0",
+    "workbox-strategies": "^7.0.0"
   },
   "devDependencies": {
     "@types/dompurify": "^3.0.5",
@@ -26,7 +31,6 @@
     "@typescript-eslint/parser": "^6.6.0",
     "@vitejs/plugin-react": "^4.0.4",
     "autoprefixer": "^10.4.16",
-    "cypress": "^13.6.2",
     "electron": "^26.1.0",
     "electron-builder": "^24.6.4",
     "eslint": "^8.48.0",

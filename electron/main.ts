@@ -1,5 +1,6 @@
-import { app, BrowserWindow} from 'electron';
+import { app, BrowserWindow,ipcMain, nativeTheme} from 'electron';
 import path from 'node:path';
+//const ipc = ipcMain;
 
 // The built directory structure
 //
@@ -25,13 +26,31 @@ function createWindow() {
       nodeIntegration: true,
       preload: path.join(__dirname, 'preload.js'),
     },
+
   });
+
+  ipcMain.handle('dark-mode:toggle', () => {
+    if (nativeTheme.shouldUseDarkColors) {
+      nativeTheme.themeSource = 'light'
+    } else {
+      nativeTheme.themeSource = 'dark'
+    }
+    return nativeTheme.shouldUseDarkColors
+  })
+
+  ipcMain.handle('dark-mode:system', () => {
+    nativeTheme.themeSource = 'system'
+  })
+
+  win.loadFile('./index.html')
 
   win.webContents.openDevTools();
 
   win.webContents.on('did-finish-load', () => {
     win?.webContents.send('main-process-message', (new Date).toLocaleString());
   });
+
+
 
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL);
