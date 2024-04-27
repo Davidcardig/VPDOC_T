@@ -51,7 +51,7 @@ function createWindow() {
   });
 
 
-  const server = 'https://vpdoc-nyuo8892k-davidcardigs-projects.vercel.app/'
+  const server = 'https://vpdoc.vercel.app'
   const url = `${server}/update/${process.platform}/${app.getVersion()}`
   autoUpdater.setFeedURL({ url })
   autoUpdater.on('update-downloaded', ( releaseNotes, releaseName) => {
