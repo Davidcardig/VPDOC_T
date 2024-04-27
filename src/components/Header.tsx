@@ -1,11 +1,9 @@
 import { Link } from 'react-router-dom'
 
 import logo from "../assets/img/logo-documentation.png";
-import VPDesk from '/src/assets/img/VPdesk.jpg';
-import VPGO from '/src/assets/img/VPgo.png';
-import VPPortal from '/src/assets/img/VPportal.jpg';
-
-
+import VPDesk from '../assets/img/VPdesk.jpg';
+import VPGO from '../assets/img/VPgo.png';
+import VPPortal from '../assets/img/VPportal.jpg';
 
 
 function Header() {
