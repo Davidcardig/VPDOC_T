@@ -1,4 +1,4 @@
-import { app,autoUpdater, BrowserWindow,dialog,ipcMain, nativeTheme} from 'electron';
+import { app,autoUpdater, BrowserWindow,ipcMain, nativeTheme} from 'electron';
 import path from 'node:path';
 //const ipc = ipcMain;
 
@@ -54,19 +54,6 @@ function createWindow() {
   const server = 'https://vpdoc.vercel.app'
   const url = `${server}/update/${process.platform}/${app.getVersion()}`
   autoUpdater.setFeedURL({ url })
-  autoUpdater.on('update-downloaded', ( releaseNotes, releaseName) => {
-    const dialogOpts = {
-      type: 'info',
-      buttons: ['Restart', 'Later'],
-      title: 'Application Update',
-      message: process.platform === 'win32' ? releaseNotes : releaseName,
-      detail: "Une nouvelle version a été téléchargée. Redémarrez l'application pour appliquer les mises à jour"
-    }
-
-    dialog.showMessageBox(dialogOpts).then((returnValue) => {
-      if (returnValue.response === 0) autoUpdater.quitAndInstall()
-    })
-  })
   setInterval(() => {
     autoUpdater.checkForUpdates()
   }, 60000)
