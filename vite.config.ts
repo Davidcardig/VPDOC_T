@@ -27,9 +27,4 @@ export default defineConfig({
 
     }),
   ],
-  build: {
-    rollupOptions: {
-      external: ['../assets/img/logo-documentation.png']
-    }
-  }
 })
