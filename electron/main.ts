@@ -1,6 +1,6 @@
-import { app,autoUpdater, BrowserWindow,ipcMain, nativeTheme} from 'electron';
+import { app,BrowserWindow,ipcMain, nativeTheme} from 'electron';
 import path from 'node:path';
-//const ipc = ipcMain;
+require('update-electron-app')
 
 // The built directory structure
 //
@@ -51,12 +51,7 @@ function createWindow() {
   });
 
 
-  const server = 'https://hazel-g55lfp3cy-davidcardigs-projects.vercel.app'
-  const url = `${server}/update/${process.platform}/${app.getVersion()}`
-  autoUpdater.setFeedURL({ url })
-  setInterval(() => {
-    autoUpdater.checkForUpdates()
-  }, 60000)
+
   if (VITE_DEV_SERVER_URL) {
     win.loadURL(VITE_DEV_SERVER_URL);
   } else {
