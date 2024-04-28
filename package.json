@@ -5,7 +5,6 @@
   "description": "Application Desktop pour la gestion des documents",
   "author": "David Cardigos",
   "scripts": {
-    "install": "npm install",
     "dev": "vite",
     "build": "tsc && vite build && electron-builder",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
