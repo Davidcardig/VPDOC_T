@@ -2,7 +2,7 @@ import { app,autoUpdater,BrowserWindow,ipcMain, nativeTheme} from 'electron';
 import path from 'node:path';
 require('update-electron-app')
 
-const server = "https://vpdoc-hqsrf20x4-davidcardigs-projects.vercel.app"
+const server = "https://hazel-eight-umber.vercel.app"
 const url = `${server}/update/${process.platform}/${app.getVersion()}`
 
 autoUpdater.setFeedURL({ url })
