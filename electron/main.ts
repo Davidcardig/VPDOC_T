@@ -1,31 +1,43 @@
-import { app,autoUpdater,BrowserWindow,ipcMain, nativeTheme,dialog} from 'electron';
+import { app,BrowserWindow,ipcMain, nativeTheme,dialog} from 'electron';
 import path from 'node:path';
-require('update-electron-app')
+import { autoUpdater } from 'electron-updater';
 
-const server = "https://hazel-dawox0xe4-davidcardigs-projects.vercel.app"
-const url = `${server}/update/${process.platform}/${app.getVersion()}`
 
-autoUpdater.setFeedURL({ url })
-setInterval(() => {
-  autoUpdater.checkForUpdates()
-}, 60000)
-autoUpdater.on('update-downloaded', () => {
-  const dialogOpts: Electron.MessageBoxOptions = {
-    type: 'info',
-    buttons: ['Restart', 'Later'],
-    title: 'Application Update',
-    message: "Une nouvelle version de l'application est disponible.",
-    detail: "Une nouvelle version a été téléchargée. Redémarrez l'application pour appliquer les mises à jour."
-  };
 
-  dialog.showMessageBox(dialogOpts).then((returnValue) => {
-    if (returnValue.response === 0) autoUpdater.quitAndInstall();
+app.whenReady().then(() => {
+  createWindow();
+
+  app.on("activate", function () {
+    if (BrowserWindow.getAllWindows().length == 0) createWindow();
   });
+
+
+  autoUpdater.checkForUpdates()
+
+  autoUpdater.on('update-downloaded', () => {
+    const dialogOpts: Electron.MessageBoxOptions = {
+      type: 'info',
+      buttons: ['Restart', 'Later'],
+      title: 'Application Update',
+      message: "Une nouvelle version de l'application est disponible.",
+      detail: "Une nouvelle version a été téléchargée. Redémarrez l'application pour appliquer les mises à jour."
+    };
+
+    dialog.showMessageBox(dialogOpts).then((returnValue) => {
+      if (returnValue.response === 0) autoUpdater.quitAndInstall();
+    });
+  });
+  autoUpdater.on('error', (message) => {
+    console.error('There was a problem updating the application')
+    console.error(message)
+  })
+
 });
-autoUpdater.on('error', (message) => {
-  console.error('There was a problem updating the application')
-  console.error(message)
-})
+
+ipcMain.handle('app_version', () => {
+  return { version: app.getVersion() };
+});
+
 
 
 // The built directory structure

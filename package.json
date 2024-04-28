@@ -1,7 +1,7 @@
 {
   "name": "Vpdoc",
   "private": true,
-  "version": "3.0.1",
+  "version": "1.0.0",
   "description": "Application Desktop pour la gestion des documents",
   "author": "David Cardigos",
   "scripts": {
@@ -11,10 +11,30 @@
     "preview": "vite preview",
     "start": "electron ."
   },
+  "repository": "https://github.com/Davidcardig/VPDOC_T",
+  "publish": {
+    "provider": "github",
+    "releaseType": "release"
+  },
+  "build": {
+    "appId": "com.vpdoc",
+    "productName": "Vpdoc",
+    "directories": {
+      "output": "build"
+    },
+    "mac": {
+      "icon": "src/ico.ico"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "src/ico.ico"
+    }
+  },
   "dependencies": {
     "@react-pdf/renderer": "^3.4.2",
     "axios": "^1.6.8",
     "dompurify": "^3.0.8",
+    "electron-updater": "^6.1.8",
     "idb": "^8.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -33,7 +53,7 @@
     "@vitejs/plugin-react": "^4.0.4",
     "autoprefixer": "^10.4.16",
     "electron": "^26.1.0",
-    "electron-builder": "^24.6.4",
+    "electron-builder": "^24.13.3",
     "eslint": "^8.48.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
@@ -44,16 +64,6 @@
     "vite-plugin-electron": "^0.14.0",
     "vite-plugin-electron-renderer": "^0.14.5"
   },
-  "main": "dist-electron/main.js",
-  "build": {
-    "directories": {
-      "output": "build"
-    },
-    "mac": {
-      "icon": "src/ico.ico"
-    },
-    "win": {
-      "icon": "src/ico.ico"
-    }
-  }
+  "main": "dist-electron/main.js"
+
 }
