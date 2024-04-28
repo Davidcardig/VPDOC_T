@@ -1,12 +1,12 @@
 {
-  "name": "vpdoc",
+  "name": "Vpdoc",
   "private": true,
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Application Desktop pour la gestion des documents",
   "author": "David Cardigos",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && electron-builder --mac --win --x64",
+    "build": "tsc && vite build && electron-builder --x64",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "start": "electron ."
@@ -16,6 +16,7 @@
     "axios": "^1.6.8",
     "dompurify": "^3.0.8",
     "electron-updater": "^6.1.8",
+    "hazel-server": "^5.1.1",
     "idb": "^8.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
