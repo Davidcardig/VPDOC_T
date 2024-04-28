@@ -9,12 +9,12 @@ autoUpdater.setFeedURL({ url })
 setInterval(() => {
   autoUpdater.checkForUpdates()
 }, 60000)
-autoUpdater.on('update-downloaded', (_event: any, releaseNotes: any, releaseName: any) => {
+autoUpdater.on('update-downloaded', () => {
   const dialogOpts: Electron.MessageBoxOptions = {
     type: 'info',
     buttons: ['Restart', 'Later'],
     title: 'Application Update',
-    message: process.platform === 'win32' ? releaseNotes : releaseName,
+    message: "Une nouvelle version de l'application est disponible.",
     detail: "Une nouvelle version a été téléchargée. Redémarrez l'application pour appliquer les mises à jour."
   };
 
