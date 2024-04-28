@@ -1,12 +1,12 @@
 {
   "name": "Vpdoc",
   "private": true,
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Application Desktop pour la gestion des documents",
   "author": "David Cardigos",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && electron-builder --x64",
+    "build": "tsc && vite build && electron-builder",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "start": "electron ."
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@types/dompurify": "^3.0.5",
+    "@types/plist": "^3.0.5",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
     "@types/react-html-parser": "^2.0.6",
