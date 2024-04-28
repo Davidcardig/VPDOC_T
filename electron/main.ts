@@ -2,6 +2,10 @@ import { app,BrowserWindow,ipcMain, nativeTheme} from 'electron';
 import path from 'node:path';
 require('update-electron-app')
 
+
+
+
+
 // The built directory structure
 //
 // ├─┬─┬ dist
