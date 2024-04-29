@@ -30,16 +30,18 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # Cela provient de l'étape de création de la release
-          asset_path: /VPDOC_T/tree/main/build
-          asset_name: ${{ steps.package.outputs.version }} # Remplacez par le nom que vous voulez donner à votre fichier
-          asset_content_type: application/octet-stream # Remplacez par le type de contenu correct pour votre fichier
-
+      - name: Upload all files in build directory
+        run: |
+          for file in build/*; do
+            if [ -f "$file" ]; then
+              echo "Uploading $file"
+              curl \
+                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                -H "Content-Type: $(file -b --mime-type $file)" \
+                --data-binary @"$file" \
+                "${{ steps.create_release.outputs.upload_url }}?name=$(basename $file)"
+            fi
+          done
       - name: Remove build directory
         run: |
           git rm -r build
