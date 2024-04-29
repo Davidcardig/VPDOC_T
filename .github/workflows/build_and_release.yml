@@ -35,11 +35,12 @@ jobs:
           for file in build/*; do
             if [ -f "$file" ]; then
               echo "Uploading $file"
+              encoded_name=$(jq -nr --arg name "$(basename "$file")" '$name|@uri')
               curl \
                 -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
                 -H "Content-Type: $(file -b --mime-type "$file")" \
                 --data-binary @"$file" \
-                "${{ steps.create_release.outputs.upload_url }}?name=$(basename "$file")"
+                "${{ steps.create_release.outputs.upload_url }}?name=${encoded_name}"
             fi
           done
       - name: Remove build directory
