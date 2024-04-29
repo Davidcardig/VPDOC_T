@@ -1,6 +1,6 @@
 import  { Component } from 'react';
 import DOMPurify from 'dompurify';
-import { Card } from "../components/Card.tsx";
+import Card  from "../components/Card.tsx";
 import {CleanPageData} from "../Models/cleanPageData.tsx";
 
 
@@ -22,7 +22,7 @@ interface PageDataState {
 }
 
 class HomePage extends Component<PageDataProps, PageDataState> {
-    private cardInstance: Card;
+
     private cleanInstance: CleanPageData;
 
     constructor(props: PageDataProps) {
@@ -33,7 +33,7 @@ class HomePage extends Component<PageDataProps, PageDataState> {
             error: null
         };
 
-        this.cardInstance = new Card();
+
         this.cleanInstance = new CleanPageData();
 
     }
@@ -98,12 +98,12 @@ class HomePage extends Component<PageDataProps, PageDataState> {
         }
 
 
-        const cards = this.cardInstance.CardsPageData(pageData.content.rendered);
+
 
 
         return (
             <div>
-                {cards}
+                <Card htmlContent={ pageData.content.rendered } />
             </div>
         );
     }

@@ -1,10 +1,12 @@
-import { JSX } from 'react/jsx-runtime';
-export class Card {
+import { useEffect, useState } from 'react';
 
-    public CardsPageData(htmlContent: string): JSX.Element[] {
+const Card = ({ htmlContent }: { htmlContent: string }) => {
+    const [sections, setSections] = useState<JSX.Element[]>([]);
+
+    useEffect(() => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(htmlContent, 'text/html');
-        const sections: JSX.Element[] = [];
+        const newSections: JSX.Element[] = [];
 
         doc.querySelectorAll('h4').forEach((h4) => {
             let sibling = h4.nextElementSibling;
@@ -13,8 +15,7 @@ export class Card {
                 content.push(sibling.outerHTML);
                 sibling = sibling.nextElementSibling
             }
-            sections.push(
-// <div className="mb-1 justify-center items-center my-10 w-screen ">
+            newSections.push(
                 <div className="mb-1 justify-center items-center my-10 w-screen ">
                     <div className=" flex-col items-center bg-white border border-gray-100 rounded-lg shadow md:flex-row md:max-w-[70rem] hover:bg-gray-100 ">
                         <div className="flex border-b-black-300 border-b-2 border-black rounded-lg md:rounded-none md:rounded-l-lg">
@@ -26,16 +27,19 @@ export class Card {
                         </div>
                     </div>
                 </div>
-
             );
         });
 
-        return sections;
-    }
+        setSections(newSections);
+    }, [htmlContent]);
 
-
-
-
+    return (
+        <>
+            {sections}
+        </>
+    );
 }
+
+export default Card;
 
 
