@@ -1,4 +1,4 @@
-import { app,BrowserWindow,ipcMain, nativeTheme,dialog} from 'electron';
+import { app,BrowserWindow,ipcMain,dialog} from 'electron';
 import path from 'node:path';
 import { autoUpdater } from 'electron-updater';
 
@@ -59,6 +59,12 @@ const VITE_DEV_SERVER_URL = process.env['VITE_DEV_SERVER_URL'];
 function createWindow() {
   win = new BrowserWindow({
     frame: false,
+    titleBarStyle: 'hidden',
+    titleBarOverlay: {
+      color: '#131826',
+      symbolColor: '#D2D5DB',
+      height: 32
+    },
     icon: './src/ico.ico',
     webPreferences: {
       nodeIntegration: true,
@@ -67,22 +73,10 @@ function createWindow() {
 
   });
 
-  ipcMain.handle('dark-mode:toggle', () => {
-    if (nativeTheme.shouldUseDarkColors) {
-      nativeTheme.themeSource = 'light'
-    } else {
-      nativeTheme.themeSource = 'dark'
-    }
-    return nativeTheme.shouldUseDarkColors
-  })
-
-  ipcMain.handle('dark-mode:system', () => {
-    nativeTheme.themeSource = 'system'
-  })
 
   win.loadFile('./index.html')
 
-  win.webContents.openDevTools();
+  //win.webContents.openDevTools();
 
   win.webContents.on('did-finish-load', () => {
     win?.webContents.send('main-process-message', (new Date).toLocaleString());
@@ -112,5 +106,3 @@ app.on('activate', () => {
     createWindow();
   }
 });
-
-app.whenReady().then(createWindow);
