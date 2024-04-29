@@ -34,23 +34,3 @@ jobs:
             New changes are available
           draft: false
           prerelease: false
-
-      - name: List all files in build directory
-        id: list_files
-        run: |
-          echo "::set-output name=files::$(ls build)"
-
-      - name: Upload files
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/${{ steps.list_files.outputs.files }}
-          asset_name: ${{ steps.list_files.outputs.files }}
-          asset_content_type: application/octet-stream
-      - name: Remove build directory
-        run: |
-          git rm -r build
-          git commit -m "Remove build directory after release"
-          git push origin main
