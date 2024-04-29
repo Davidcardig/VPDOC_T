@@ -23,6 +23,7 @@
     "target": [
       {
         "target": "nsis",
+        "icon": "src/ico.ico",
         "arch": [
           "x64"
         ]

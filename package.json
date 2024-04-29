@@ -1,7 +1,7 @@
 {
   "name": "Vpdoc",
   "private": true,
-  "version": "1.0.5",
+  "version": "7.0.0",
   "description": "Application Desktop pour la gestion des documents",
   "author": "David Cardigos",
   "scripts": {
@@ -23,12 +23,14 @@
       "output": "build"
     },
     "mac": {
-      "icon": "src/ico.ico"
+      "icon": "src/ico.ico",
+      "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
     },
     "win": {
       "target": "nsis",
       "icon": "src/ico.ico"
-    }
+    },
+    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
   },
   "dependencies": {
     "@react-pdf/renderer": "^3.4.2",

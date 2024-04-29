@@ -38,6 +38,10 @@ ipcMain.handle('app_version', () => {
   return { version: app.getVersion() };
 });
 
+setInterval(() => {
+  autoUpdater.checkForUpdates()
+}, 60000)
+
 
 
 // The built directory structure
@@ -106,3 +110,4 @@ app.on('activate', () => {
     createWindow();
   }
 });
+

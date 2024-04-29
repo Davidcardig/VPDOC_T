@@ -1,0 +1,8 @@
+version: 7.0.0
+files:
+  - url: Vpdoc-Windows-7.0.0-Setup.exe
+    sha512: ZLjV6Fs6PUQ0PzIcay8ECvsqtHLZbnUSqgtcOZO5Zw5QFX7yU1fo1U0XdSUd89xIE+E8n9R7Ee3Nw7dh3BfQkQ==
+    size: 83383667
+path: Vpdoc-Windows-7.0.0-Setup.exe
+sha512: ZLjV6Fs6PUQ0PzIcay8ECvsqtHLZbnUSqgtcOZO5Zw5QFX7yU1fo1U0XdSUd89xIE+E8n9R7Ee3Nw7dh3BfQkQ==
+releaseDate: '2024-04-29T21:11:46.080Z'
