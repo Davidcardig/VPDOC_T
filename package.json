@@ -23,11 +23,11 @@
       "output": "build"
     },
     "mac": {
-      "icon": "src/assets/img/VPgo.png"
+      "icon": "src/ico.ico"
     },
     "win": {
       "target": "nsis",
-      "icon": "src/assets/img/VPgo.png"
+      "icon": "src/ico.ico"
     }
   },
   "dependencies": {
