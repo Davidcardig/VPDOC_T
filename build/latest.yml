@@ -1,0 +1,8 @@
+version: 2.0.1
+files:
+  - url: Vpdoc-Setup-2.0.1.exe
+    sha512: ZnX5tGefwS/eCoW5ssTfYDHW1uTrgCJykKyqiE1ubYVOaJXW2y93XCpGcNO6ooWah2QEAjgt/VpwkrKvh22YeA==
+    size: 80911872
+path: Vpdoc-Setup-2.0.1.exe
+sha512: ZnX5tGefwS/eCoW5ssTfYDHW1uTrgCJykKyqiE1ubYVOaJXW2y93XCpGcNO6ooWah2QEAjgt/VpwkrKvh22YeA==
+releaseDate: '2024-04-29T11:25:57.168Z'
