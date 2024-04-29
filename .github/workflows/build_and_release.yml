@@ -30,19 +30,20 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Upload all files in build directory
+      - name: List all files in build directory
+        id: list_files
         run: |
-          for file in build/*; do
-            if [ -f "$file" ]; then
-              echo "Uploading $file"
-              encoded_name=$(jq -nr --arg name "$(basename "$file")" '$name|@uri')
-              curl \
-                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                -H "Content-Type: $(file -b --mime-type "$file")" \
-                --data-binary @"$file" \
-                "${{ steps.create_release.outputs.upload_url }}?name=${encoded_name}"
-            fi
-          done
+          echo "::set-output name=files::$(ls build)"
+
+      - name: Upload files
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/${{ steps.list_files.outputs.files }}
+          asset_name: ${{ steps.list_files.outputs.files }}
+          asset_content_type: application/octet-stream
       - name: Remove build directory
         run: |
           git rm -r build
