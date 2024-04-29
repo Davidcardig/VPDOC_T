@@ -24,8 +24,24 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.package.outputs.version }}
-          release_name: Release ${{ steps.package.outputs.version }}
+          release_name: ${{ steps.package.outputs.version }}
           body: |
             New changes are available
           draft: false
           prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # Cela provient de l'étape de création de la release
+          asset_path: /build # Remplacez par le chemin vers votre fichier
+          asset_name: ${{ steps.package.outputs.version }} # Remplacez par le nom que vous voulez donner à votre fichier
+          asset_content_type: application/octet-stream # Remplacez par le type de contenu correct pour votre fichier
+
+      - name: Remove build directory
+        run: |
+          git rm -r build
+          git commit -m "Remove build directory after release"
+          git push origin main
