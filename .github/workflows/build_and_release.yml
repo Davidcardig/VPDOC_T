@@ -1,9 +1,9 @@
-name: Build and Release
+name: Déploiement de la nouvelle version de l'application en release
 
 on:
   push:
     branches:
-      - main  # Remplacez par la branche de votre choix
+      - main
 
 jobs:
   build:
