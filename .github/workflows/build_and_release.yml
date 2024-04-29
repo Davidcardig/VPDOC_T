@@ -1,9 +1,9 @@
-name: Build and Release
+name: Déploiement de la nouvelle version de l'application en release
 
 on:
   push:
     branches:
-      - main  # Remplacez par la branche de votre choix
+      - main
 
 jobs:
   build:
@@ -34,22 +34,3 @@ jobs:
             New changes are available
           draft: false
           prerelease: false
-
-      - name: Upload all files in build directory
-        run: |
-          for file in build/*; do
-            if [ -f "$file" ]; then
-              echo "Uploading $file"
-              encoded_name=$(jq -nr --arg name "$(basename "$file")" '$name|@uri')
-              curl \
-                -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                -H "Content-Type: $(file -b --mime-type "$file")" \
-                --data-binary @"$file" \
-                "${{ steps.create_release.outputs.upload_url }}?name=${encoded_name}"
-            fi
-          done
-      - name: Remove build directory
-        run: |
-          git rm -r build
-          git commit -m "Remove build directory after release"
-          git push origin main
