@@ -1,7 +1,7 @@
 {
   "name": "Vpdoc",
   "private": true,
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Application Desktop pour la gestion des documents",
   "author": "David Cardigos",
   "scripts": {
@@ -32,7 +32,6 @@
   },
   "dependencies": {
     "@react-pdf/renderer": "^3.4.2",
-    "axios": "^1.6.8",
     "dompurify": "^3.0.8",
     "electron-updater": "^6.1.8",
     "idb": "^8.0.0",

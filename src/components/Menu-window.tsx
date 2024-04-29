@@ -31,10 +31,6 @@ const MenuWindow = () => {
                                         <Link to="/Settings" className="light-effect flex justify-end items-end">
                                             <img src={Settings_logo} alt="Settings" className="h-4 w-4" />
                                         </Link>
-                                    <button id="reduceBtn" className="text-gray-300 hover:text-white">&#128469;</button>
-                                    <button id="sizeBtn" className="text-gray-300 hover:text-white">&#128471;</button>
-                                    <button id="closeBtn" className="text-gray-300 hover:text-white">&#128473;</button>
-
                                     </div>
                                 </div>
                             </div>
