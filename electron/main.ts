@@ -18,7 +18,7 @@ app.whenReady().then(() => {
   autoUpdater.on('update-downloaded', () => {
     const dialogOpts: Electron.MessageBoxOptions = {
       type: 'info',
-      buttons: ['Restart', 'Later'],
+      buttons: ['Redémarrer', 'Plus Tard'],
       title: 'Application Update',
       message: "La nouvelle version"+{ version: app.getVersion() }+" de l'application est disponible." ,
       detail: "Voulez-vous redémarrer l'application pour mettre à jour ?"

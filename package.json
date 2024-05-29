@@ -1,8 +1,8 @@
 {
   "name": "Vpdoc",
   "private": true,
-  "version": "2.0.1",
-  "description": "Application Desktop pour la gestion des documents",
+  "version": "2.0.2",
+  "description": "Application VPDOC pour la gestion des documents de Visual Planning",
   "author": "David Cardigos",
   "scripts": {
     "dev": "vite",

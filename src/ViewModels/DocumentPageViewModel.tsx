@@ -9,13 +9,12 @@ import DocumentPage from "../Views/DocumentPage.tsx";
 
 
 interface DocumentPageProps {
-    content: { rendered: string };
-    slug: string;
+    content?: { rendered: string };
+    slug?: string;
     slugProp?: string; // Slug si appel composant avec slugProp
-    title: { rendered: string };
-    links: { slug: string, linkText: string }[];
+    title?: { rendered: string };
+    links?: { slug: string, linkText: string }[];
 }
-
 
 const DocumentPageViewModel = ({ slugProp }: DocumentPageProps) => {
 
@@ -95,6 +94,9 @@ const DocumentPageViewModel = ({ slugProp }: DocumentPageProps) => {
         return <div>Page not found</div>;
     }
 
+    if (!data || !data.content || !data.title) {
+        return <div>Page not found</div>;
+    }
 
     let content = data.content.rendered;
     const div = document.createElement('div');
