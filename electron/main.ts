@@ -19,8 +19,8 @@ app.whenReady().then(() => {
     const dialogOpts: Electron.MessageBoxOptions = {
       type: 'info',
       buttons: ['Redémarrer', 'Plus Tard'],
-      title: 'Application Update',
-      message: "La nouvelle version"+{ version: app.getVersion() }+" de l'application est disponible." ,
+      title: 'Mise à jour disponible',
+      message: "Une nouvelle version de l'application est disponible." ,
       detail: "Voulez-vous redémarrer l'application pour mettre à jour ?"
     };
 
@@ -33,7 +33,7 @@ app.whenReady().then(() => {
 
   // Gère les erreurs lors de la mise à jour automatique de l'application
   autoUpdater.on('error', (message) => {
-    console.error('There was a problem updating the application')
+    console.error("Il y a eu une erreur lors de la mise à jour de l'application ")
     console.error(message)
   })
 
