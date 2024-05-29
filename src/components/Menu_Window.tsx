@@ -1,19 +1,7 @@
-
 import logo from "../assets/img/Logo-Documentation.png";
-import Settings_logo from "../assets/img/Logo-Settings.svg";
-import {Link} from "react-router-dom";
 
 
 const MenuWindow = () => {
-    const reduceBtn = document.getElementById('reduceBtn')
-
-    reduceBtn?.addEventListener('click', () => {
-        console.log('reduce')
-            window.ipcRenderer.send('reduce-window')
-        }
-    )
-
-
 
     return (
         <div>
@@ -26,13 +14,7 @@ const MenuWindow = () => {
                                 <div className="flex-shrink-0 flex items-center align-self: center;">
                                     <p className="text-white text-xs">VP DOC</p>
                                 </div>
-                                <div className="md:block">
-                                    <div className="flex items-center space-x-4 menu-btn z-100">
-                                        <Link to="/Settings" className="light-effect flex justify-end items-end">
-                                            <img src={Settings_logo} alt="Settings" className="h-4 w-4" />
-                                        </Link>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </nav>
@@ -43,3 +25,4 @@ const MenuWindow = () => {
 };
 
 export default MenuWindow;
+

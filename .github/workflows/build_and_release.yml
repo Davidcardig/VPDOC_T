@@ -34,3 +34,4 @@ jobs:
             New changes are available
           draft: false
           prerelease: false
+

@@ -13,9 +13,27 @@
     "dist",
     "dist-electron"
   ],
+  "linux": {
+    "target": [
+      {
+        "target": "AppImage",
+        "icon": "src/ico.ico",
+        "arch": [
+          "x64"
+        ]
+      }
+    ],
+    "artifactName": "${productName}-Linux-${version}.${ext}"
+  },
   "mac": {
     "target": [
-      "dmg"
+        {
+            "target": "dmg",
+          "icon": "src/ico.ico",
+            "arch": [
+            "x64"
+            ]
+        }
     ],
     "artifactName": "${productName}-Mac-${version}-Installer.${ext}"
   },
@@ -37,10 +55,5 @@
     "allowToChangeInstallationDirectory": true,
     "deleteAppDataOnUninstall": false
   },
-  "linux": {
-    "target": [
-      "AppImage"
-    ],
-    "artifactName": "${productName}-Linux-${version}.${ext}"
-  }
+
 }

@@ -51,17 +51,8 @@ export class CleanPageData {
     public cleanContentPage = (content: string): string => {
         let cleanedContent = content;
 
-        //cleanedContent = cleanedContent.replace(/\[et_pb_section[^\]]*?\](?:[\s\S](?!&nbsp;|\[et_pb_section))*\[\/et_pb_section\]/g, '');
-
-
         cleanedContent = cleanedContent.replace(/\[et_pb_section[\s\S]*?\]/g, '');
 
-        // Supprimer les shortcodes de type [et_pb...]
-        //cleanedContent = cleanedContent.replace(/\[et_pb_[^\]]*\]/g, '');
-
-        //cleanedContent = cleanedContent.replace(/&nbsp;&raquo;[\s\S]*?theme_builder_area=&nbsp;&raquo;post_content&nbsp;&raquo;\]/g, '');
-
-        // Supprimer des motifs spécifiques supplémentaires
         const patternsToRemove = [
             /\[\/et_pb_search\]\[\/et_pb_column\]\[\/et_pb_image\]\[\/et_pb_column\]\[\/et_pb_row\]\[\/et_pb_section\]/g,
             /\[\/et_pb_text\]\[\/et_pb_column\]/g,
@@ -78,13 +69,5 @@ export class CleanPageData {
 
         return cleanedContent;
     }
-
-
-
-
-
-
-
-
 
 }

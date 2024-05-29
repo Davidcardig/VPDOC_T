@@ -4,18 +4,18 @@ import DOMPurify from 'dompurify';
 import fetchPage from "../Models/fetchPage.tsx"; // Assurez-vous que le chemin d'accès est correct
 import ListDocumentPage from "../Views/ListDocumentPage.tsx";
 
-interface PageDataProps {
+interface ListDocumentPageProps {
     slug: string;
     TextColor: string ;
 }
 
-interface PageContent {
+interface ListDocumentPage {
     title: { rendered: string };
     content: { rendered: string };
 }
 
-const PageArchiDoc: React.FC<PageDataProps> = (props) => {
-    const [pageData, setPageData] = useState<PageContent | null>(null);
+const PageArchiDoc: React.FC<ListDocumentPageProps> = (props) => {
+    const [pageData, setPageData] = useState<ListDocumentPage | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [, setLinks] = useState<{ slug: string, linkText: string }[]>([]);

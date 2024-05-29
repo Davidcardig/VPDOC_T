@@ -10,7 +10,6 @@ function Header() {
 
     return (
         <div>
-
             <div className="relative min-d-full mt-8 ">
             <nav className="bg-gray-900 ">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
@@ -21,7 +20,6 @@ function Header() {
                             </Link>
                             <div className="hidden md:block">
                                 <div className="ml-10 flex items-baseline space-x-4">
-
 
                                     <Link to="/VPdesk" className="border-light-effect flex items-center text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
                                         <img src={VPDesk} alt="VPdesk" className="w-8 h-8 mr-2" />VPdesk

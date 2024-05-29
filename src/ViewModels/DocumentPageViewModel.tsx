@@ -8,27 +8,20 @@ import generatePDF, {Options} from "react-to-pdf";
 import DocumentPage from "../Views/DocumentPage.tsx";
 
 
-interface PageContent {
+interface DocumentPageProps {
     content: { rendered: string };
     slug: string;
+    slugProp?: string; // Slug si appel composant avec slugProp
     title: { rendered: string };
     links: { slug: string, linkText: string }[];
 }
 
 
-
-interface slug {
-    slugProp?: string; // Slug si appel composant avec slugProp
-}
-
-
-
-
-const DocumentPageViewModel = ({ slugProp }: slug) => {
+const DocumentPageViewModel = ({ slugProp }: DocumentPageProps) => {
 
     const { slug: slugParam } = useParams<{ slug: string }>();
     const slug = slugProp || slugParam;
-    const [data, setData] = useState<PageContent | null>(null);
+    const [data, setData] = useState<DocumentPageProps | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [imageData, setImageData] = useState<{ url: string, title: string }[] | null>(null); // New state for image data
@@ -140,7 +133,6 @@ const DocumentPageViewModel = ({ slugProp }: slug) => {
     const getTargetElement = () => document.getElementById("container");
 
     const downloadPdf = () => generatePDF(getTargetElement, options);
-
 
     return (
         <div>

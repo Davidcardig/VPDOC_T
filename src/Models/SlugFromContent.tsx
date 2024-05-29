@@ -4,8 +4,8 @@ export class SlugFromContent {
 
     constructor(updateLinks: (links: { slug: string, linkText: string }[]) => void, /*updateContent: (content: string) => void*/) {
         this.updateLinks = updateLinks;
-        // this.updateContent = updateContent;
     }
+
     extractSlugFromHref(href: string | null): string | null {
         if (!href) return null;
         const match = href.match(/\/([a-zA-Z0-9-]+)\/?$/);
@@ -17,21 +17,20 @@ export class SlugFromContent {
         const parser = new DOMParser();
         const doc = parser.parseFromString(htmlContent, 'text/html');
         const anchors = doc.querySelectorAll('a');
+
         const links = Array.from(anchors).map(anchor => {
             const slug = this.extractSlugFromHref(anchor.getAttribute('href'));
             const linkText = anchor.textContent || '';
-
-            // Change href of anchor tags
+            // On ajoute attribut href
             if (slug) {
                 anchor.setAttribute('href', `http://127.0.0.1:5173/#/nouvelle-page/${slug}`);
 
             }
-
             return { slug: slug || '', linkText };
         });
-        this.updateLinks(links);
 
-        // Return the modified HTML content
+        this.updateLinks(links);
+        // Retourne le contenu HTML modifié
         return doc.body.innerHTML;
     }
 
