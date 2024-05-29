@@ -15,7 +15,7 @@ function App() {
             <New_element />
             <div>
                 <Routes>
-                    <Route path="/" element={<HomePageViewModel slug={"accueil"}/>} />
+                    <Route path="/" element={<HomePageViewModel />} />
                     <Route path="/vpdesk" element={ <ContentPage slugProp={"VPdesk"} />} />
                     <Route path="/VPportal" element={<ContentPage slugProp={"VPportal"}/>} />
                     <Route path="/VPGO" element={ <PageArchiDoc slug={"VPGO"} TextColor={"#f79521"}/>} />

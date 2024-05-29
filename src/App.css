@@ -1,4 +1,5 @@
 
 root {
     overflow: hidden; /* Cela cache les barres de défilement */
+    background-color: #2a628a; /* Couleur de fond */
 }

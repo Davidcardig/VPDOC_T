@@ -1,12 +1,22 @@
+import admin_image from '../assets/img/HomePage_Accueil/admin.jpg';
+import installation_image from '../assets/img/HomePage_Accueil/installation_visual_planning_entreprise.jpg';
+import manipulation_image from '../assets/img/HomePage_Accueil/manipulation_donnees.jpg';
+import agencement_image from '../assets/img/HomePage_Accueil/agencement_visualisation.jpg';
+import modules_image from '../assets/img/HomePage_Accueil/module.jpg';
+import presentation_image from '../assets/img/HomePage_Accueil/fond_presentation.jpg';
+import api_image from '../assets/img/HomePage_Accueil/bandeau_doc_api.jpg';
+import definition_image from '../assets/img/HomePage_Accueil/Définition.jpg';
 const data = {
     "Présentation de Visual Planning": {
-
+        "image" : presentation_image,
         "Pourquoi Visual planning ?": {
             "Slug": "presentation-generale"
         },
 
     },
+
     "Installation et mise à jour de Visual Planning": {
+        "image" : installation_image,
         "Les prérequis techniques": {
             "Slug": ""
         },
@@ -26,8 +36,9 @@ const data = {
             "Slug": ""
         }
     },
-    "Définition de la structure de Visual Planning": {
 
+    "Définition de la structure de Visual Planning": {
+        "image" : definition_image,
         "Paramètres généraux": {
             "Slug": ""
         },
@@ -59,7 +70,9 @@ const data = {
             "Slug": ""
         }
     },
+
     "Manipulation des données": {
+        "image" : manipulation_image,
         "Affectation des données": {
             "Slug": ""
         },
@@ -100,7 +113,9 @@ const data = {
             "Slug": ""
         }
     },
+
     "Agencement et visualisation": {
+        "image" : agencement_image,
 
         "Fenêtre principale": {
             "Slug": ""
@@ -127,40 +142,9 @@ const data = {
             "Slug": ""
         }
     },
-    "Indicateurs et alertes": {
 
-        "Les contraintes": {
-            "Slug": ""
-        },
-        "Les plans de charge": {
-            "Slug": ""
-        },
-        "Rapports d’événements": {
-            "Slug": ""
-        },
-        "Seuils": {
-            "Slug": ""
-        }
-    },
-    "Imports, exports et publication": {
-
-        "Imports et exports de ressources": {
-            "Slug": ""
-        },
-        "Imports et exports d’événements": {
-            "Slug": ""
-        },
-        "Imports et exports de rapports d’événements": {
-            "Slug": ""
-        },
-        "Identifier les types de données": {
-            "Slug": ""
-        },
-        "Gestion des impressions": {
-            "Slug": ""
-        }
-    },
     "Modules de Visual Planning": {
+        "image" : modules_image,
 
         "Calendriers internet": {
             "Slug": ""
@@ -185,6 +169,7 @@ const data = {
         }
     },
     "API WebServices": {
+        "image" : api_image,
 
         "Introduction": {
             "Slug": ""
@@ -197,6 +182,7 @@ const data = {
         }
     },
     "Administration de Visual Planning": {
+        "image" : admin_image,
 
         "Admin Center": {
             "Slug": ""

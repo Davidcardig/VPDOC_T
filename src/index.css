@@ -21,11 +21,12 @@
 }
 
 h2{
-
+     margin-left: 45px;
     font-size: 1.875rem; /* text-3xl */
     font-weight: 600; /* font-bold */
     letter-spacing: -0.025em; /* tracking-tight */
-
+    /* rend le texte sans aucune interactivité */
+    pointer-events: none;
 }
 h3{
     margin-top: 25px;
@@ -52,6 +53,7 @@ h3{
 dl dt span a {
     color: black; /* Couleur de texte par défaut */
     transition: all 0.3s ease; /* Transition fluide */
+    line-height: 1.5;
 }
 
 /* Effet hover */
@@ -62,4 +64,16 @@ dl dt span a:hover {
     
 }
 
+
+.backgroung_VP{
+   background-color: rgba(198, 197, 197, 0.13);
+    background-image: url("assets/img/fond_VP.png");
+    background-size: cover;
+    background-repeat: repeat;
+    background-attachment: fixed;
+    background-position: center;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
 

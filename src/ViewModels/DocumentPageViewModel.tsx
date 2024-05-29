@@ -1,11 +1,12 @@
 import {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
 import fetchPageData from "../Models/fetchPage.tsx";
 import DOMPurify from 'dompurify';
 import ImageNameExtractor from "../Models/ImageNameExtractor.tsx"
 import {SlugFromContent} from "../Models/SlugFromContent.tsx";
 import generatePDF, {Options} from "react-to-pdf";
 import DocumentPage from "../Views/DocumentPage.tsx";
+
 
 
 interface DocumentPageProps {
@@ -67,6 +68,11 @@ const DocumentPageViewModel = ({ slugProp }: DocumentPageProps) => {
                 setIsLoading(false);
             });
     }, [slug]);
+    const navigate = useNavigate();
+
+    const handleGoBack = () => {
+        navigate(-1); // Retourne à la page précédente
+    };
 
     if (isLoading) {
         return <div className="text-center relative mt-[200px]">
@@ -136,9 +142,10 @@ const DocumentPageViewModel = ({ slugProp }: DocumentPageProps) => {
 
     const downloadPdf = () => generatePDF(getTargetElement, options);
 
+
     return (
         <div>
-            <DocumentPage title={data.title.rendered} downloadPdf={downloadPdf} content={content}/>
+            <DocumentPage title={data.title.rendered} downloadPdf={downloadPdf} content={content} onGoBack={handleGoBack} />
         </div>
     )
 }

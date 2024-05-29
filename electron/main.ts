@@ -74,6 +74,8 @@ function createWindow() {
       symbolColor: '#D2D5DB',
       height: 32
     },
+    minWidth: 800,
+    minHeight: 600,
     icon: './src/ico.ico',
     webPreferences: {
       nodeIntegration: true,
