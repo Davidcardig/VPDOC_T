@@ -1,5 +1,6 @@
 import logo from "../assets/img/Logo-Documentation.png";
 
+// Composant pour afficher la fenêtre de l'application
 const MenuWindow = () => {
     return (
         <div>

@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import data from '../Models/Data';
+import Data from '../Models/Data';
 import fleche_bas from '../assets/img/fleche_bas.png';
 import fleche_droite from '../assets/img/fleche_droite.png';
 
+//Le composant HomePage affiche les différentes sections de la page d'accueil
 function HomePage() {
     const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
 
@@ -15,9 +16,8 @@ function HomePage() {
     };
 
     return (
-
         <div className="backgroung_VP">
-            {Object.entries(data).map(([title, sectionData]) => {
+            {Object.entries(Data).map(([title, sectionData]) => {
                 const image = 'image' in sectionData ? sectionData.image : undefined;
                 const subSections = 'image' in sectionData ? { ...sectionData, image: undefined } : sectionData;
                 return (
@@ -31,17 +31,19 @@ function HomePage() {
                                         className="ml-auto text-gray-500 focus:outline-none"
                                         onClick={() => toggleMenu(title)}
                                     >
-                                        {openMenus[title] ? <img className="h-8 w-8" src={fleche_bas} alt="arrow down" /> : <img className="h-8 w-8" src={fleche_droite} alt="arrow right" />}
+                                        {openMenus[title] ? <img className="h-8 w-8" src={fleche_bas} alt="arrow down" /> :
+                                            <img className="h-8 w-8" src={fleche_droite} alt="arrow right" />}
                                     </button>
                                 </div>
                             </div>
-
+                            {/* quand le contenu du menu est ouvert */}
                             {openMenus[title] ? (
                                 <div className="mt-1 bg-white border border-gray-100 rounded-lg shadow p-4 transition-all duration-400 h-auto">
                                     {Object.entries(subSections).map(([subTitle, subSectionData]) => (
                                         subSectionData && 'Slug' in subSectionData && (
                                             <div key={subTitle} className="mb-2">
-                                                <Link to={`/nouvelle-page/${subSectionData.Slug}`} className="font-semibold text-left flex-auto text-gray-900 hover:text-gray-600">
+                                                <Link to={`/nouvelle-page/${subSectionData.Slug}`} className="font-semibold text-left flex-auto text-gray-900
+                                                hover:text-gray-600">
                                                     {subTitle}
                                                 </Link>
                                             </div>

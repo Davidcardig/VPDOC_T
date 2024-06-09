@@ -5,7 +5,7 @@ import VPDesk from '/src/assets/img/VPdesk.jpg';
 import VPGO from '/src/assets/img/VPgo.png';
 import VPPortal from '/src/assets/img/VPportal.jpg';
 
-
+// Composant pour afficher l'en-tête de la page
 function Header() {
 
     return (

@@ -6,102 +6,106 @@ import modules_image from '../assets/img/HomePage_Accueil/module.jpg';
 import presentation_image from '../assets/img/HomePage_Accueil/fond_presentation.jpg';
 import api_image from '../assets/img/HomePage_Accueil/bandeau_doc_api.jpg';
 import definition_image from '../assets/img/HomePage_Accueil/Définition.jpg';
-const data = {
-    "Présentation de Visual Planning": {
+
+// Définition de la structure des données pour la page d'accueil
+const Data = {
+    "Presentation de Visual Planning": {
         "image" : presentation_image,
         "Pourquoi Visual planning ?": {
             "Slug": "presentation-generale"
         },
-
     },
 
-    "Installation et mise à jour de Visual Planning": {
+    "Installation et mise a jour de Visual Planning": {
         "image" : installation_image,
-        "Les prérequis techniques": {
-            "Slug": ""
+        "Les prerequis techniques": {
+            "Slug": "installation-et-mise-a-jour-de-visual-planning-entreprise-prerequis"
         },
         "Architecture de VP Entreprise": {
-            "Slug": ""
+            "Slug": "architecture-de-visual-planning"
         },
         "Installation de VP Entreprise": {
-            "Slug": ""
+            "Slug": "installation-de-vp-enterprise"
         },
-        "Mise à jour majeure de VP Entreprise": {
-            "Slug": ""
+        "Connexion au SGBD": {
+            "Slug": "connexion-au-sgbd"
         },
-        "Mise à jour mineure de VP Entreprise": {
-            "Slug": ""
+        "Mise a jour majeure de VP Entreprise": {
+            "Slug": "mise-a-jour-majeure-de-vp-enterprise"
         },
-        "Désinstallation de VP Entreprise": {
-            "Slug": ""
+        "Mise a jour mineure de VP Entreprise": {
+            "Slug": "mise-a-jour-mineure-de-vp-enterprise"
+        },
+        "Desinstallation de VP Entreprise": {
+            "Slug": "mise-a-jour-mineure-de-vp-enterprise"
         }
     },
 
     "Définition de la structure de Visual Planning": {
         "image" : definition_image,
         "Paramètres généraux": {
-            "Slug": ""
+            "Slug": "les-parametres-generaux"
         },
         "Dimension": {
-            "Slug": ""
+            "Slug": "dimension"
         },
-        "Forum": {
-            "Slug": ""
+        "Formulaire": {
+            "Slug": "formulaire"
         },
         "Icône": {
-            "Slug": ""
+            "Slug": "icone"
         },
         "Rubriques": {
-            "Slug": ""
+            "Slug": "rubrique-affichage"
         },
-        "Gestion du temps": {
-            "Slug": ""
+        "Période de temps": {
+            "Slug": "periode-de-temps"
         },
         "Poste de valorisation": {
-            "Slug": ""
+            "Slug": "poste-de-valorisation"
         },
         "Règle de création": {
-            "Slug": ""
+            "Slug": "regle-de-creation"
         },
         "Hiérarchie d’événements": {
-            "Slug": ""
+            "Slug": "hierarchie-evenements"
         },
         "Workflows": {
-            "Slug": ""
+            "Slug": "workflows"
         }
     },
 
     "Manipulation des données": {
         "image" : manipulation_image,
-        "Affectation des données": {
-            "Slug": ""
+        "Affectation d'une ressource": {
+            "Slug": "affectation-dune-ressource"
         },
         "Calendrier": {
-            "Slug": ""
+            "Slug": "calendrier"
         },
         "Charge": {
-            "Slug": ""
+            "Slug": "charge"
         },
         "Durée": {
-            "Slug": ""
+            "Slug": "duree"
         },
         "Déplacement": {
-            "Slug": ""
+            "Slug": "deplacement"
         },
-        "Filtres": {
-            "Slug": ""
+        "Filtre": {
+            "Slug": "filtre"
         },
         "Liens": {
-            "Slug": ""
+            "Slug": "lien"
         },
         "Menus contextuels": {
-            "Slug": ""
+            "Slug": "menu-contextuel"
         },
         "Ordonnancement d’événements": {
-            "Slug": ""
+            "Slug": "ordonnancement-devenements"
         },
         "Recherche, sélection, tri": {
-            "Slug": ""
+            "Slug": "recherche"
         },
         "Événement et ressource": {
             "Slug": ""
@@ -211,4 +215,4 @@ const data = {
     }
 };
 
-export default data;
+export default Data;

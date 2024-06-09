@@ -1,7 +1,7 @@
 {
   "name": "Vpdoc",
   "private": true,
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Aplication VPDOC pour la gestion des documents de Visual Planning",
   "author": "David Cardigos",
   "scripts": {
@@ -38,11 +38,9 @@
     "@react-pdf/renderer": "^3.4.2",
     "dompurify": "^3.0.8",
     "electron-updater": "^6.1.8",
-    "idb": "^8.0.0",
     "jest": "29.7.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-medium-image-zoom": "^5.2.4",
     "react-router-dom": "^6.21.1",
     "react-test-renderer": "^18.3.1",
     "react-to-pdf": "^1.0.1",

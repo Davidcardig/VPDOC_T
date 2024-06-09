@@ -10,50 +10,66 @@ interface ListDocumentPageProps {
     TextColor: string ;
 }
 
-interface ListDocumentPage {
-    title: { rendered: string };
-    content: { rendered: string };
-}
 
+// Définition du composant PageArchiDoc en tant que Functional Component React
 const PageArchiDoc: React.FC<ListDocumentPageProps> = (props) => {
-    const [pageData, setPageData] = useState<ListDocumentPage | null>(null);
+    // Définition des états pour les données de la page, le chargement et les erreurs
+    const [pageData, setPageData] = useState<{ content: { rendered: string } } | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    // Initialisation d'un état vide pour les liens de la page
     const [, setLinks] = useState<{ slug: string, linkText: string }[]>([]);
 
+    // Création d'une instance de SlugFromContent pour extraire les liens des contenus
     const slugInstance = new SlugFromContent((links) => setLinks(links));
 
+    // Utilisation de useEffect pour effectuer une requête à l'API au chargement de la page
     useEffect(() => {
-        fetchPage(props.slug)
-            .then(data => {
-                if (data) {
-                    let content = data.content.rendered;
-                    content = slugInstance.extractSlugsFromContent(content);
-                    console.log(content);
+        // Vérification de l'existence du slug avant de faire la requête
 
-                    const cleanedData = {
-                        ...data,
-                        content: {
-                            ...data.content,
-                            rendered: DOMPurify.sanitize(content, { USE_PROFILES: { html: true } })
-                        }
-                    };
+            // Affichage de l'animation de chargement
+            setIsLoading(true);
 
-                    setPageData(cleanedData);
+            // Requête à l'API pour récupérer les données de la page
+            fetchPage(props.slug)
+                .then(data => {
+                    // Vérification si des données ont été récupérées
+                    if (data) {
+                        // Extraction des liens à partir du contenu de la page
+                        let content = data.content.rendered;
+                        content = slugInstance.extractSlugsFromContent(content);
+
+                        // Nettoyage du contenu avec DOMPurify pour des raisons de sécurité
+                        const cleanedData = {
+                            ...data,
+                            content: {
+                                ...data.content,
+                                rendered: DOMPurify.sanitize(content, { USE_PROFILES: { html: true } })
+                            }
+                        };
+
+                        // Mise à jour de l'état avec les données nettoyées
+                        setPageData(cleanedData);
+                        setIsLoading(false);
+                    } else {
+                        // Si aucune donnée n'est retournée, arrêter l'animation de chargement
+                        setIsLoading(false);
+                    }
+                })
+
+                .catch(error => {
+                    // En cas d'erreur, afficher un message d'erreur et arrêter l'animation de chargement
+                    setError(error.message);
                     setIsLoading(false);
-                } else {
-                    setIsLoading(false);
-                }
-            })
-            .catch(error => {
-                setError(error.message);
-                setIsLoading(false);
-            });
+                });
+
     }, [props.slug]);
 
-    const navigate = useNavigate();
+
 
     const handleGoBack = () => {
+        const navigate = useNavigate();
         navigate(-1); // Retourne à la page précédente
     };
 
