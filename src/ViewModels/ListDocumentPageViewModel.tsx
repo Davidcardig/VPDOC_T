@@ -4,9 +4,16 @@ import DOMPurify from 'dompurify';
 import fetchPage from "../Models/fetchPage.tsx"; // Assurez-vous que le chemin d'accès est correct
 import ListDocumentPage from "../Views/ListDocumentPage.tsx";
 
+interface ListDocumentPageProps {
+    slug: string;
+    TextColor: string;
+}
 
 const PageArchiDoc: React.FC<ListDocumentPageProps> = (props) => {
+
+    // Initialisation d'un état vide pour les données de la page
     const [pageData, setPageData] = useState<{ content: { rendered: string } } | null>(null);
+
     // Définition des états pour les données de la page, le chargement et les erreurs
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);

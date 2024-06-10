@@ -8,21 +8,27 @@ import DocumentPage from '../Views/DocumentPage';
 import fetchPage from "../Models/fetchPage.tsx";
 
 interface DocumentPageProps {
-    content?: { rendered: string };
-    slug?: string;
     slugProp?: string;
-    title?: { rendered: string };
-    links?: { slug: string; linkText: string }[];
 }
 
 const DocumentPageViewModel = ({ slugProp }: DocumentPageProps) => {
+    // Récupération du slug de la page à afficher
     const { slug: slugParam } = useParams<{ slug: string }>();
+
+    // Utilisation du slug fourni en paramètre ou du slug de l'URL
     const slug = slugProp || slugParam;
+
+    // Initialisation d'un état pour stocker les données de la page
     const [data, setData] = useState<DocumentPageProps | null>(null);
+
+    // Définition des états pour le chargement et les erreurs
     const [isLoading, setIsLoading] = useState(true);
     const [error] = useState<string | null>(null);
+
+    // Initialisation d'un état pour stocker les données des images
     const [imageData, setImageData] = useState<{ url: string; title: string }[] | null>(null);
 
+    // Utilisation de useEffect pour effectuer une requête à l'API au chargement de la page
     useEffect(() => {
         if (!slug) return;
         setIsLoading(true);
@@ -106,14 +112,17 @@ const DocumentPageViewModel = ({ slugProp }: DocumentPageProps) => {
         return <div>Page not found</div>;
     }
 
+
     let content = data.content.rendered;
     const div = document.createElement('div');
     div.innerHTML = content;
+
+
     content = DOMPurify.sanitize(div.innerHTML, { USE_PROFILES: { html: true } });
+
 
     let imageIndex = 0;
     const tabindexRegex = /.*nbsp;»\]/g;
-
     if (imageData) {
         content = content.replace(tabindexRegex, () => {
             const image = imageData[imageIndex];
@@ -121,10 +130,15 @@ const DocumentPageViewModel = ({ slugProp }: DocumentPageProps) => {
             return `<img class="img_pagecontent" key={index}  src="${image.url}" alt="${image.title}"/>`;
         });
     }
+
+
     content = content.replace(/<h2.*?<\/h2>/g, '');
     content = content.replace(/Attention/g, '<span class="font-bold text-red-600 text-xl">Attention ! </span>');
+
     div.innerHTML = content;
 
+    const downloadPdf = () => generatePDF(getTargetElement, options);
+    const getTargetElement = () => document.getElementById("container");
     const options: Options = {
         filename: data.title.rendered + '.pdf',
         page: {
@@ -133,9 +147,7 @@ const DocumentPageViewModel = ({ slugProp }: DocumentPageProps) => {
         }
     };
 
-    const getTargetElement = () => document.getElementById("container");
 
-    const downloadPdf = () => generatePDF(getTargetElement, options);
 
     return (
         <div>
