@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import DOMPurify from 'dompurify';
 import ImageNameExtractor from '../Models/ImageNameExtractor';
 import { SlugFromContent } from '../Models/SlugFromContent';
@@ -71,11 +71,6 @@ const DocumentPageViewModel = ({ slugProp }: DocumentPageProps) => {
         fetchData();
     }, [slug]);
 
-    const navigate = useNavigate();
-
-    const handleGoBack = () => {
-        navigate(-1);
-    };
 
     if (isLoading) {
         return (
@@ -144,7 +139,7 @@ const DocumentPageViewModel = ({ slugProp }: DocumentPageProps) => {
 
     return (
         <div>
-            <DocumentPage title={data.title.rendered} downloadPdf={downloadPdf} content={content} onGoBack={handleGoBack} />
+            <DocumentPage title={data.title.rendered} downloadPdf={downloadPdf} content={content} />
         </div>
     );
 }

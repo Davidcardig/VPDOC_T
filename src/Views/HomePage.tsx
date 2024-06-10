@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Data from '../Models/Data';
+import HomeData from '../Models/HomeData.tsx';
 import fleche_bas from '../assets/img/fleche_bas.png';
 import fleche_droite from '../assets/img/fleche_droite.png';
 
@@ -17,7 +17,7 @@ function HomePage() {
 
     return (
         <div className="backgroung_VP">
-            {Object.entries(Data).map(([title, sectionData]) => {
+            {Object.entries(HomeData).map(([title, sectionData]) => {
                 const image = 'image' in sectionData ? sectionData.image : undefined;
                 const subSections = 'image' in sectionData ? { ...sectionData, image: undefined } : sectionData;
                 return (

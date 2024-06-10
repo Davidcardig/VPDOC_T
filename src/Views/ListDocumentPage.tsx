@@ -1,12 +1,11 @@
-import back_arrow from "../assets/img/back_arrow.png";
+import BackButton from "../components/Back_Button.tsx";
 
 interface ListDocumentPageProps {
     PageData: string;
     TextColor: string;
-    onGoBack: () => void;
 }
 
-const ListDocumentPage = ({ PageData, TextColor, onGoBack }: ListDocumentPageProps) => {
+const ListDocumentPage = ({ PageData, TextColor }: ListDocumentPageProps) => {
     return (
         <div className="relative">
             <div className="backgroung_VP bg-white shadow flex justify-between items-center py-4">
@@ -15,9 +14,7 @@ const ListDocumentPage = ({ PageData, TextColor, onGoBack }: ListDocumentPagePro
                     {`dl dt span a:hover {color: ${TextColor}!important;}`}
                 </style>
                 <div className="absolute left-0 top-0 flex items-center">
-                    <img src={back_arrow}
-                         className="w-10 h-10 ml-8 mr-2 mt-4 cursor-pointer transition-transform duration-200 hover:scale-125"
-                         onClick={onGoBack}/>
+                  <BackButton className={"w-10 h-10 ml-8 mr-2 mt-4 cursor-pointer transition-transform duration-200 hover:scale-125"} />
                 </div>
                 <h2 className=" text-3xl font-bold tracking-tight text-gray-900 ml-8"></h2>
                 <div className="px-1 content font-semibold text-left flex-auto text-gray-900"
@@ -29,3 +26,4 @@ const ListDocumentPage = ({ PageData, TextColor, onGoBack }: ListDocumentPagePro
 }
 
 export default ListDocumentPage;
+

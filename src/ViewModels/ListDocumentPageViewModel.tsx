@@ -3,31 +3,21 @@ import {SlugFromContent} from "../Models/SlugFromContent.tsx";
 import DOMPurify from 'dompurify';
 import fetchPage from "../Models/fetchPage.tsx"; // Assurez-vous que le chemin d'accès est correct
 import ListDocumentPage from "../Views/ListDocumentPage.tsx";
-import {useNavigate} from "react-router-dom";
-
-interface ListDocumentPageProps {
-    slug: string;
-    TextColor: string ;
-}
 
 
-// Définition du composant PageArchiDoc en tant que Functional Component React
 const PageArchiDoc: React.FC<ListDocumentPageProps> = (props) => {
-    // Définition des états pour les données de la page, le chargement et les erreurs
     const [pageData, setPageData] = useState<{ content: { rendered: string } } | null>(null);
+    // Définition des états pour les données de la page, le chargement et les erreurs
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     // Initialisation d'un état vide pour les liens de la page
-    const [, setLinks] = useState<{ slug: string, linkText: string }[]>([]);
-
-    // Création d'une instance de SlugFromContent pour extraire les liens des contenus
+    const [,setLinks] = useState<{ slug: string, linkText: string }[]>([]);
     const slugInstance = new SlugFromContent((links) => setLinks(links));
+
 
     // Utilisation de useEffect pour effectuer une requête à l'API au chargement de la page
     useEffect(() => {
-        // Vérification de l'existence du slug avant de faire la requête
-
             // Affichage de l'animation de chargement
             setIsLoading(true);
 
@@ -48,7 +38,6 @@ const PageArchiDoc: React.FC<ListDocumentPageProps> = (props) => {
                                 rendered: DOMPurify.sanitize(content, { USE_PROFILES: { html: true } })
                             }
                         };
-
                         // Mise à jour de l'état avec les données nettoyées
                         setPageData(cleanedData);
                         setIsLoading(false);
@@ -63,15 +52,9 @@ const PageArchiDoc: React.FC<ListDocumentPageProps> = (props) => {
                     setError(error.message);
                     setIsLoading(false);
                 });
-
     }, [props.slug]);
 
 
-
-    const handleGoBack = () => {
-        const navigate = useNavigate();
-        navigate(-1); // Retourne à la page précédente
-    };
 
 
     if (isLoading) {
@@ -94,16 +77,14 @@ const PageArchiDoc: React.FC<ListDocumentPageProps> = (props) => {
 
 
     if (error) {
-        return <div>Error: {error}</div>;
+        return <div>Erreur: {error}</div>;
     }
 
     if (!pageData) {
-        return <div>Page not found</div>;
+        return <div>la page n'a pas été trouvée</div>;
     }
 
-    return (
-        <ListDocumentPage PageData={pageData.content.rendered} TextColor={props.TextColor} onGoBack={handleGoBack} />
-    );
+    return (<ListDocumentPage PageData={pageData.content.rendered} TextColor={props.TextColor} />);
 }
 
 export default PageArchiDoc;

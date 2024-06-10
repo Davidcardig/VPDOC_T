@@ -8,7 +8,7 @@ import api_image from '../assets/img/HomePage_Accueil/bandeau_doc_api.jpg';
 import definition_image from '../assets/img/HomePage_Accueil/Définition.jpg';
 
 // Définition de la structure des données pour la page d'accueil
-const Data = {
+const HomeData = {
     "Presentation de Visual Planning": {
         "image" : presentation_image,
         "Pourquoi Visual planning ?": {
@@ -215,4 +215,4 @@ const Data = {
     }
 };
 
-export default Data;
+export default HomeData;
