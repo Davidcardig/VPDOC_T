@@ -30,9 +30,19 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "src/ico.ico"
+      "icon": "src/ico.ico",
+      "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
     },
-    "artifactName": "${productName}-Windows-${version}-Setup.${ext}"
+    "linux": {
+      "category": "Utility",
+      "target": [
+        "AppImage",
+        "deb",
+        "rpm"
+      ],
+      "icon": "src/ico.ico",
+      "artifactName": "${productName}-Linux-${version}.${ext}"
+    }
   },
   "dependencies": {
     "@react-pdf/renderer": "^3.4.2",
