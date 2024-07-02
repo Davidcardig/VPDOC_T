@@ -1,7 +1,7 @@
 {
   "name": "Vpdoc",
   "private": true,
-  "version": "3.2.5",
+  "version": "3.2.6",
   "description": "Application VPDOC pour la gestion des documents de Visual Planning",
   "author": "David Cardigos",
   "scripts": {
@@ -16,7 +16,10 @@
   "publish": {
     "provider": "github",
     "releaseType": "release",
-    "owner": "Davidcardig"
+    "owner": "Davidcardig",
+    "repo": "VPDOC_T",
+    "vPrefixedTagName": true,
+    "releaseName": "Release ${version}",
   },
   "build": {
     "appId": "com.vpdoc",
@@ -42,7 +45,14 @@
       ],
       "icon": "src/ico.ico",
       "artifactName": "${productName}-Linux-${version}.${ext}"
-    }
+    },
+    "files": [
+      "dist-electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      "src/assets/**"
+    ]
   },
   "dependencies": {
     "@react-pdf/renderer": "^3.4.2",
