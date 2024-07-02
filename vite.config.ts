@@ -28,13 +28,9 @@ export default defineConfig({
   ],
   build: {
     rollupOptions: {
-      input: {
-        main: '/src/main.tsx',
-        nested: '/src/nested/index.html'
-      },
-      external: [
-        '/src/assets/img/logo-documentation.png'
-      ]
+        external: [
+          '/src/assets/img/logo-documentation.png'
+        ]
     }
   }
 })
