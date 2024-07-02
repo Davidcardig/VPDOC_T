@@ -67,12 +67,3 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Deploy Application
-        run: npm run deploy
-        env:
-          NODE_ENV: production
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
