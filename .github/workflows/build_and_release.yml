@@ -76,4 +76,3 @@ jobs:
         env:
           NODE_ENV: production
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-}
