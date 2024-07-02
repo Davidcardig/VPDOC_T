@@ -6,6 +6,7 @@ on:
       - main
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
 
@@ -18,26 +19,9 @@ jobs:
           git config --global user.email "davidcardigos@hotmail.fr"
           git config --global user.name "Davidcardig"
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
-        run: npm install
-
       - name: Get version
         id: package
-        run: echo "version=$(node -p \"require('./package.json').version\")" >> $GITHUB_ENV
-
-      - name: Build application
-        run: npm run build
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: build
-          path: build/
+        run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
 
       - name: Create Release
         id: create_release
@@ -45,8 +29,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ env.version }}
-          release_name: ${{ env.version }}
+          tag_name: ${{ steps.package.outputs.version }}
+          release_name: ${{ steps.package.outputs.version }}
           body: |
             New changes are available
           draft: false
