@@ -67,3 +67,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build
+          path: ./build
+
+      - name: Attach build directory to release
+        run: |
+          for file in ./build/*; do
+            echo "Uploading $file to release"
+            gh release upload ${{ needs.build.outputs.create_release.upload_url }} "$file" --clobber
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
