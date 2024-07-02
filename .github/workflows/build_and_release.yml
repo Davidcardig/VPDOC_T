@@ -55,6 +55,11 @@ jobs:
           draft: false
           prerelease: false
 
+  deploy:
+    runs-on: windows-latest
+    needs: build
+
+    steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
@@ -71,4 +76,4 @@ jobs:
         env:
           NODE_ENV: production
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+}
