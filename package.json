@@ -18,15 +18,13 @@
     "releaseType": "release",
     "owner": "Davidcardig",
     "repo": "VPDOC_T",
-    "vPrefixedTagName": true,
-    "releaseName": "Release ${version}"
   },
   "build": {
     "appId": "com.vpdoc",
     "productName": "Vpdoc",
     "directories": {
-      "output": "build",
-      "app": "build"
+      "output": "build"
+
     },
     "mac": {
       "icon": "src/ico.ico",
