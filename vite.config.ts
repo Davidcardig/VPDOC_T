@@ -24,9 +24,17 @@ export default defineConfig({
       // Ployfill the Electron and Node.js built-in modules for Renderer process.
       // See 👉 https://github.com/electron-vite/vite-plugin-electron-renderer
       renderer: {},
-
     }),
   ],
-
-
+  build: {
+    rollupOptions: {
+      input: {
+        main: '/src/main.tsx',
+        nested: '/src/nested/index.html'
+      },
+      external: [
+        '/src/assets/img/logo-documentation.png'
+      ]
+    }
+  }
 })
