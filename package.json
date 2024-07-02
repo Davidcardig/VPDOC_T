@@ -25,7 +25,8 @@
     "appId": "com.vpdoc",
     "productName": "Vpdoc",
     "directories": {
-      "output": "build"
+      "output": "build",
+      "app": "build"
     },
     "mac": {
       "icon": "src/ico.ico",
