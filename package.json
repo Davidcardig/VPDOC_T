@@ -1,7 +1,7 @@
 {
   "name": "Vpdoc",
   "private": true,
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "Application VPDOC pour la gestion des documents de Visual Planning",
   "author": "David Cardigos",
   "scripts": {
@@ -9,13 +9,13 @@
     "build": "tsc && vite build && electron-builder",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "start": "electron ."
+    "start": "electron .",
+    "deploy": "tsc && vite build && electron-builder --publish always"
   },
   "repository": "https://github.com/Davidcardig/VPDOC_T",
   "publish": {
     "provider": "github",
     "releaseType": "release",
-    "repo": "Davidcardig/VPDOC_T",
     "owner": "Davidcardig"
   },
   "build": {

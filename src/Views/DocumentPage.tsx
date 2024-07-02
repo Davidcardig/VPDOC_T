@@ -1,5 +1,5 @@
 import logo_pdf from "../assets/img/logo_pdf.png";
-import BackButton from "../components/Back_Button.tsx";
+import BackButton from "../components/BackButton.tsx";
 
 
 interface DocumentPageProps {
@@ -17,7 +17,8 @@ const DocumentPage = ({ title, content, downloadPdf }: DocumentPageProps) => {
                     <div className="text-3xl font-bold tracking-tight text-gray-900 ml-4"
                          dangerouslySetInnerHTML={{__html: title}}/>
                 </div>
-                <img className="w-10 cursor-pointer transition-transform duration-200 hover:scale-125" src={logo_pdf} onClick={downloadPdf} alt="PDF Logo"/>
+                <img className="w-10 cursor-pointer transition-transform duration-200 hover:scale-125"
+                     src={logo_pdf} onClick={downloadPdf} alt="PDF Logo"/>
             </header>
             <div id="container">
                 <div className="mx-8 my-5 text-wrap ml-5 whitespace-normal"
@@ -28,3 +29,5 @@ const DocumentPage = ({ title, content, downloadPdf }: DocumentPageProps) => {
 }
 
 export default DocumentPage;
+
+

@@ -9,7 +9,7 @@ const fetchPage = async (slug: string | undefined) => {
         throw new Error('Network response was not ok'); // Gestion des erreurs de réseau
     }
     const data = await response.json();
-    if (data && data.length > 0) {
+    if (data) {
         const cleanInstance = new CleanPageData();
         const data_content = data[0].content.rendered;
         // Nettoyer le contenu de la page en utilisant CleanPageData

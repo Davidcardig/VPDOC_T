@@ -4,7 +4,7 @@ import DocumentPageViewModel from "./ViewModels/DocumentPageViewModel.tsx";
 import New_element from "./components/New_element.tsx";
 import ListDocumentPageViewModel from "./ViewModels/ListDocumentPageViewModel.tsx";
 import HomePageViewModel from "./ViewModels/HomePageViewModel.tsx";
-import Menu_Window from "./components/Menu_Window.tsx";
+import Menu_Window from "./components/MenuWindow.tsx";
 
 
 function App() {

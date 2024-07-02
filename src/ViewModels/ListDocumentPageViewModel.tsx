@@ -9,7 +9,7 @@ interface ListDocumentPageProps {
     TextColor: string;
 }
 
-const PageArchiDoc: React.FC<ListDocumentPageProps> = (props) => {
+const ListDocumentPageViewModel: React.FC<ListDocumentPageProps> = (props) => {
 
     // Initialisation d'un état vide pour les données de la page
     const [pageData, setPageData] = useState<{ content: { rendered: string } } | null>(null);
@@ -94,4 +94,4 @@ const PageArchiDoc: React.FC<ListDocumentPageProps> = (props) => {
     return (<ListDocumentPage PageData={pageData.content.rendered} TextColor={props.TextColor} />);
 }
 
-export default PageArchiDoc;
+export default ListDocumentPageViewModel;

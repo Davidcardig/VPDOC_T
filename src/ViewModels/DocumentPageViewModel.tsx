@@ -21,14 +21,16 @@ const DocumentPageViewModel = ({ slugProp }: DocumentPageProps) => {
     // Initialisation d'un état pour stocker les données de la page
     const [data, setData] = useState<DocumentPageProps | null>(null);
 
+    // Initialisation d'un état pour stocker les données des images
+    const [imageData, setImageData] = useState<{ url: string; title: string }[] | null>(null);
+
     // Définition des états pour le chargement et les erreurs
     const [isLoading, setIsLoading] = useState(true);
     const [error] = useState<string | null>(null);
 
-    // Initialisation d'un état pour stocker les données des images
-    const [imageData, setImageData] = useState<{ url: string; title: string }[] | null>(null);
 
-    // Utilisation de useEffect pour effectuer une requête à l'API au chargement de la page
+
+    // Utilisation de useEffect pour effectuer une requête à l'API par rapport au slug
     useEffect(() => {
         if (!slug) return;
         setIsLoading(true);
@@ -64,7 +66,6 @@ const DocumentPageViewModel = ({ slugProp }: DocumentPageProps) => {
                     });
 
                     response.content.rendered = slugExtractor.extractSlugsFromContent(response.content.rendered);
-
                     setData(response);
                 }
             } catch (error) {

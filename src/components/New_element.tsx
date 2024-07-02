@@ -54,7 +54,7 @@ const New_element = ({ articleName, articleSlug }: { articleName: string, articl
     return (
         <div>
             <div className="bg-blue-900 text-center py-4 lg:px-4">
-                <div className="p-2 bg-blue-800 items-center text-blue-100 leading-none lg:rounded-full flex lg:inline-flex" role="alert">
+                <div className="p-2 bg-blue-800 items-center text-blue-100 leading-none md:rounded-full flex md:inline-flex" role="alert">
                     <span className="flex rounded-full bg-blue-500 uppercase px-2 py-1 text-xs font-bold mr-3">Nouveau</span>
                     <Link to={`/nouvelle-page/${articleSlug}`} className="font-semibold mr-2 text-left flex-auto">
                         {articleName} {/* Nom de l'article */}
