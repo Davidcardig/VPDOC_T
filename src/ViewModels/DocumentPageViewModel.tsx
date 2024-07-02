@@ -7,8 +7,13 @@ import generatePDF, { Options } from 'react-to-pdf';
 import DocumentPage from '../Views/DocumentPage';
 import fetchPage from "../Models/fetchPage.tsx";
 
+
 interface DocumentPageProps {
-    slugProp?: string;
+    content?: { rendered: string };
+    slug?: string;
+    slugProp?: string; // Slug si appel composant avec slugProp
+    title?: { rendered: string };
+    links?: { slug: string, linkText: string }[];
 }
 
 const DocumentPageViewModel = ({ slugProp }: DocumentPageProps) => {
@@ -114,7 +119,7 @@ const DocumentPageViewModel = ({ slugProp }: DocumentPageProps) => {
     }
 
 
-    let content = data.content.rendered;
+    let content = typeof data.content !== 'boolean' ? data.content.rendered : '';
     const div = document.createElement('div');
     div.innerHTML = content;
 

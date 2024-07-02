@@ -6,6 +6,7 @@ interface DocumentPageProps {
     title: string;
     content: string;
     downloadPdf: () => void;
+
 }
 
 const DocumentPage = ({ title, content, downloadPdf }: DocumentPageProps) => {
