@@ -70,10 +70,16 @@ jobs:
           path: ./build
 
       - name: Attach build directory to release
+        shell: pwsh
         run: |
-          for file in ./build/*; do
-            echo "Uploading $file to release"
-            gh release upload ${{ needs.build.outputs.create_release.upload_url }} "$file" --clobber
-          done
+          $ReleaseUrl = '${{ needs.build.outputs.create_release.upload_url }}'
+          Get-ChildItem -Path ./build | ForEach-Object {
+            $FilePath = $_.FullName
+            Write-Host "Uploading $FilePath to release"
+            Invoke-RestMethod -Uri "$ReleaseUrl?name=$($_.Name)" -Method Post -Headers @{
+              Authorization = "token $env:GITHUB_TOKEN"
+              "Content-Type" = "application/octet-stream"
+            } -InFile $FilePath
+          }
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
