@@ -1,4 +1,5 @@
 name: Déploiement de la nouvelle version de l'application en release
+
 on:
   push:
     branches:
@@ -33,13 +34,6 @@ jobs:
         run: npm run build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: build
-          path: build/
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -53,12 +47,16 @@ jobs:
           draft: false
           prerelease: false
 
+      - name: Install GitHub CLI
+        run: |
+          choco install gh
+
       - name: Upload Release Assets
-        uses: actions/upload-release-asset@v1
+        run: |
+          for file in $(find build -type f); do
+            echo "Uploading $file"
+            gh release upload ${{ steps.create_release.outputs.tag_name }} $file --clobber
+          done
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/
-          asset_name: build
-          asset_content_type: application/zip
+          GITHUB_REPOSITORY: ${{ github.repository }}
