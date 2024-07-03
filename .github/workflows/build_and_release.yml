@@ -35,9 +35,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Verify dist-electron directory
-        run: dir dist-electron
-
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -57,21 +54,13 @@ jobs:
           draft: false
           prerelease: false
 
-  deploy:
-    runs-on: windows-latest
-    needs: build
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
           name: build
 
-      - name: Install dependencies
-        run: npm install
+      - name: Verify dist-electron directory
+        run: dir dist-electron
 
       - name: Deploy Application
         run: npm run deploy
