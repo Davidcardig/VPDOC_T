@@ -67,19 +67,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build
-          path: ./build
 
-      - name: Attach build directory to release
-        shell: pwsh
-        run: |
-          $ReleaseUrl = '${{ needs.build.outputs.create_release.upload_url }}'
-          Get-ChildItem -Path ./build | ForEach-Object {
-            $FilePath = $_.FullName
-            Write-Host "Uploading $FilePath to release"
-            Invoke-RestMethod -Uri "$ReleaseUrl?name=$($_.Name)" -Method Post -Headers @{
-              Authorization = "token $env:GITHUB_TOKEN"
-              "Content-Type" = "application/octet-stream"
-            } -InFile $FilePath
-          }
+      - name: Install dependencies
+        run: npm install
+
+      - name: Deploy Application
+        run: npm run deploy
         env:
+          NODE_ENV: production
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
