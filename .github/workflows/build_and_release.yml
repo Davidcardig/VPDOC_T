@@ -32,8 +32,7 @@ jobs:
 
       - name: Build application
         run: npm run build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -52,11 +51,13 @@ jobs:
           choco install gh
 
       - name: Upload Release Assets
+        shell: pwsh
         run: |
-          for file in $(find build -type f); do
-            echo "Uploading $file"
-            gh release upload ${{ steps.create_release.outputs.tag_name }} $file --clobber
-          done
+          $files = Get-ChildItem -Path build -File -Recurse
+          foreach ($file in $files) {
+            Write-Output "Uploading $($file.FullName)"
+            gh release upload ${{ steps.create_release.outputs.tag_name }} $file.FullName --clobber
+          }
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
