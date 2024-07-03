@@ -46,7 +46,9 @@ jobs:
           if ($release) {
             gh release delete ${{ steps.package.outputs.version }} --yes
           }
-
+        env:
+         GH_TOKEN: ${{ github.token }}
+         
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
