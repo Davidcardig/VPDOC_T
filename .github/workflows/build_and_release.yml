@@ -1,12 +1,11 @@
 name: Déploiement de la nouvelle version de l'application en release
-
 on:
   push:
     branches:
       - main
 
 jobs:
-  build:
+  build-and-release:
     runs-on: windows-latest
 
     steps:
@@ -32,26 +31,12 @@ jobs:
 
       - name: Build application
         run: npm run build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v2
         with:
           name: build
           path: build/
-
-      - name: Install GitHub CLI
-        run: sudo apt-get install -y gh
-
-      - name: Check if Release Exists
-        id: check_release
-        run: |
-          if gh release view ${{ steps.package.outputs.version }}; then
-            gh release delete ${{ steps.package.outputs.version }} -y
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
         id: create_release
@@ -66,16 +51,12 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Download build artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: build
-
-      - name: Verify dist-electron directory
-        run: dir dist-electron
-
-      - name: Deploy Application
-        run: npm run deploy
+      - name: Upload Release Assets
+        uses: actions/upload-release-asset@v1
         env:
-          NODE_ENV: production
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/
+          asset_name: build
+          asset_content_type: application/zip
