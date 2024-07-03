@@ -32,6 +32,40 @@ jobs:
 
       - name: Build application
         run: npm run build
+
+      - name: Install GitHub CLI
+        run: |
+          choco install gh
+
+      - name: Delete Existing Release
+        shell: pwsh
+        run: |
+          $release = gh release view ${{ steps.package.outputs.version }} --json url --jq .url
+          if ($release) {
+            gh release delete ${{ steps.package.outputs.version }} --yes
+          }
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+        with:
+          tag_name: ${{ steps.package.outputs.version }}
+          release_name: ${{ steps.package.outputs.version }}
+          body: |
+            New changes are available
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Assets
+        shell: pwsh
+        run: |
+          $files = Get-ChildItem -Path build -File -Recurse
+          foreach ($file in $files) {
+            Write-Output "Uploading $($file.FullName)"
+            gh release upload ${{ steps.create_release.outputs.tag_name }} $file.FullName --clobber
+          }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
