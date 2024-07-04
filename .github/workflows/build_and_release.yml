@@ -14,14 +14,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set git user
-        run: |
-          git config --global user.email "davidcardigos@hotmail.fr"
-          git config --global user.name "Davidcardig"
-
       - name: Install dependencies
         run: npm install
 
+      - name: Build application
+        run: npm run build
         env:
           NODE_ENV: production
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
