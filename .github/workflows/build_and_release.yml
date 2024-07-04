@@ -1,4 +1,4 @@
-name: Déploiement de l nouvelle version de l'application en release
+name: Déploiement de la nouvelle version de l'application en release
 
 on:
   push:
@@ -8,17 +8,32 @@ on:
 jobs:
 
   deploy:
-    runs-on: windows-latest
-    
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      runs-on: windows-latest
+      needs: build
 
-      - name: Install dependencies
-        run: npm install
+      steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v2
 
-      - name: Deploy Application
-        run: npm run deploy
-        env:
-          NODE_ENV: production
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        - name: Set git user
+          run: |
+           git config --global user.email "davidcardigos@hotmail.fr"
+           git config --global user.name "Davidcardig"
+
+        - name: Install dependencies
+          run: npm install
+
+        - name: Build application
+          run: npm run build
+          env:
+            NODE_ENV: production
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+        - name: Verify dist-electron directory
+          run: dir dist-electron
+
+        - name: Deploy Application
+          run: npm run deploy
+          env:
+            NODE_ENV: production
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
