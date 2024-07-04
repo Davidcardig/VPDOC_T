@@ -1,4 +1,4 @@
-name: Déploiement de la nouvelle version de l'application en release
+name: Déploiement de l nouvelle version de l'application en release
 
 on:
   push:
