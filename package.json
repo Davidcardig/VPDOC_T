@@ -9,7 +9,7 @@
     "build": "vite build && tsc && electron-builder --publish always",
     "preview": "vite preview",
     "start": "electron .",
-    "deploy": "electron-builder --publish always"
+    "deploy": "vite build && tsc && electron-builder --publish always"
   },
   "repository": {
     "type": "git",
