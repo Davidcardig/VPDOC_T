@@ -7,7 +7,7 @@ on:
 
 jobs:
 
-  build:
+  build_and_deploy:
     runs-on: windows-latest
     
     steps:
@@ -27,11 +27,7 @@ jobs:
         env:
           NODE_ENV: production
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  deploy : 
-    runs-on: windows-latest
-    needs: build
-    steps:
-    
+
       - name: Verify dist-electron directory
         run: dir dist-electron
 
