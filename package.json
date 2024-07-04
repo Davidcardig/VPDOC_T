@@ -1,12 +1,12 @@
 {
   "name": "Vpdoc",
   "private": true,
-  "version": "4.0.7",
+  "version": "4.0.8",
   "description": "Application VPDOC pour la gestion des documents de Visual Planning",
   "author": "David Cardigos",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && tsc && electron-builder --publish always",
+    "build": "vite build && tsc && electron-builder --publish never",
     "preview": "vite preview",
     "start": "electron .",
     "deploy": "vite build && tsc && electron-builder --publish always"
