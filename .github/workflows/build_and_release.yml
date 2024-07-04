@@ -22,14 +22,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build application
-        run: npm run build
         env:
           NODE_ENV: production
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Verify dist-electron directory
-        run: dir dist-electron
 
       - name: Deploy Application
         run: npm run deploy

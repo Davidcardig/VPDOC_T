@@ -1,23 +1,23 @@
-const  CACHE_NAME = "cache-vpdoc";
+const  CACHE_NAME = "cache";
 
-// Installation du service worker
+// l'intallation du service worker
 self.addEventListener("install", event => {
-    // Activer immédiatement le nouveau service worker
+    // Skip waiting
     self.skipWaiting();
 });
 
 // Activation du service worker
 self.addEventListener("activate", event => {
-    console.log(`${CACHE_NAME} est prêt à gérer les requêtes !`);
+    console.log(`${CACHE_NAME} now ready to handle fetches!`);
 
-    // Suppression des caches obsolètes pour éviter de saturer l'espace de stockage
+    // Suppression des caches obsolètes
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames
                     .filter(cacheName => cacheName !== CACHE_NAME)
                     .map(cacheName => {
-                        console.log(`${cacheName} a été supprimé.`);
+                        console.log(`Deleting ${cacheName}`);
                         return caches.delete(cacheName);
                     })
             );
@@ -25,29 +25,29 @@ self.addEventListener("activate", event => {
     );
 });
 
-
+// State-while-revalidate strategy
 self.addEventListener("fetch", event => {
     event.respondWith(
-        caches.match(event.request).then(response => {
-            // Serve from cache first
-            const fetchPromise = fetch(event.request).then(networkResponse => {
-                if (networkResponse && networkResponse.status === 200) {
-                    // Update the cache with a clone of the network response
-                    return caches.open(CACHE_NAME).then(cache => {
+        caches.open(CACHE_NAME).then(cache => {
+            return cache.match(event.request).then(response => {
+                const fetchPromise = fetch(event.request).then(networkResponse => {
+                    //Si la réponse du réseau est valide, elle est mise en cache
+                    if (networkResponse && networkResponse.status === 200) {
                         cache.put(event.request, networkResponse.clone());
-                        return networkResponse;
-                    });
-                }
-                return networkResponse;
+                    }
+                    return networkResponse;
+                }).catch(error => {
+                    console.error('Fetching failed:', error);
+                    throw error;
+                });
+                //Si la réponse du réseau n'est pas valide, on renvoie la réponse du cache
+                return response || fetchPromise;
             }).catch(error => {
-                console.error('Fetch failed:', error);
+                console.error('Cache match failed:', error);
                 throw error;
             });
-
-            // Retourne la réponse du cache si elle existe, sinon la réponse du réseau
-            return response || fetchPromise;
         }).catch(error => {
-            console.error('Cache match failed:', error);
+            console.error('Cache open failed:', error);
             throw error;
         })
     );
