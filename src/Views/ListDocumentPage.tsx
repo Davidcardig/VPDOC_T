@@ -8,7 +8,7 @@ interface ListDocumentPageProps {
 const ListDocumentPage = ({ PageData, TextColor }: ListDocumentPageProps) => {
     return (
         <div className="relative">
-            <div className="backgroung_VP bg-white shadow flex justify-between items-center py-4">
+            <div className="background_VP bg-white shadow flex justify-between items-center py-4">
                 <style>
                     {/*Ajout de la couleur de texte pour les liens */}
                     {`dl dt span a:hover {color: ${TextColor}!important;}`}

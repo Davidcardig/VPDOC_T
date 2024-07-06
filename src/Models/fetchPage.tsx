@@ -9,12 +9,10 @@ const fetchPage = async (slug: string | undefined) => {
         throw new Error('Network response was not ok'); // Gestion des erreurs de réseau
     }
     const data = await response.json();
-    if (data) {
         const cleanInstance = new CleanPageData();
         const data_content = data[0].content.rendered;
         // Nettoyer le contenu de la page en utilisant CleanPageData
         let Content = cleanInstance.cleanContentPage(data_content);
-        // Sanitize the content to remove any potentially harmful HTML
         Content = DOMPurify.sanitize(Content, { USE_PROFILES: { html: true } });
 
         return {
@@ -24,8 +22,8 @@ const fetchPage = async (slug: string | undefined) => {
                 rendered: Content // Mise à jour du contenu nettoyé et assaini
             },
         };
-    }
-    // Si la page n'existe pas, ne rien retourner (peut-être ajouter un retour par défaut si nécessaire)
+
+
 };
 
 export default fetchPage;

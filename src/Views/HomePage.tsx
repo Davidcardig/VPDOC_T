@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import HomeData from '../Models/HomeData.tsx';
+import HomeData from '../Models/HomeData.json';
 import fleche_bas from '../assets/img/fleche_bas.png';
 import fleche_droite from '../assets/img/fleche_droite.png';
 
-//Le composant HomePage affiche les différentes sections de la page d'accueil
+// Le composant HomePage affiche les différentes sections de la page d'accueil
 function HomePage() {
+
     const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
 
     const toggleMenu = (title: string) => {
@@ -16,12 +17,11 @@ function HomePage() {
     };
 
     return (
-        <div className="backgroung_VP">
+        <div className="background_VP">
             {Object.entries(HomeData).map(([title, sectionData]) => {
-                const image = 'image' in sectionData ? sectionData.image : undefined;
-                const subSections = 'image' in sectionData ? { ...sectionData, image: undefined } : sectionData;
+                const { image, ...subSections } = sectionData;
                 return (
-                    <div key={title} className="mb-10 flex justify-center"  onClick={() => toggleMenu(title)}>
+                    <div key={title} className="mb-10 flex justify-center" onClick={() => toggleMenu(title)}>
                         <div className="w-full md:max-w-[70rem] p-4">
                             <div className="flex-col bg-white border border-gray-100 rounded-lg shadow cursor-pointer">
                                 <div className="flex items-center border-black rounded-t-lg p-4 hover:bg-gray-100">
@@ -37,22 +37,18 @@ function HomePage() {
                                 </div>
                             </div>
                             {/* quand le contenu du menu est ouvert */}
-                            {openMenus[title] ? (
+                            {openMenus[title] && (
                                 <div className="mt-1 bg-white border border-gray-100 rounded-lg shadow p-4 transition-all duration-400 h-auto">
-                                    {Object.entries(subSections).map(([subTitle, subSectionData]) => (
-                                        subSectionData && 'Slug' in subSectionData && (
-                                            <div key={subTitle} className="mb-2">
-                                                <Link to={`/nouvelle-page/${subSectionData.Slug}`} className="font-semibold text-left flex-auto text-gray-900
-                                                hover:text-gray-600">
-                                                    {subTitle}
+                                    {Object.entries(subSections).map(([Title, SectionData]) =>
+                                        (SectionData && 'Slug' in SectionData && (
+                                            <div key={Title} className="mb-2">
+                                                <Link to={`/nouvelle-page/${SectionData.Slug}`}
+                                                      className="font-semibold text-left flex-auto text-gray-900 hover:text-gray-600">
+                                                    {Title}
                                                 </Link>
                                             </div>
                                         )
                                     ))}
-                                </div>
-                            ) : (
-                                <div className="transition-all duration-500 h-0 overflow-hidden">
-                                    {/* Le contenu du menu est caché quand il est fermé */}
                                 </div>
                             )}
                         </div>

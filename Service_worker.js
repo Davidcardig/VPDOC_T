@@ -1,16 +1,22 @@
+
+const ASSETS = [
+    "/index.html",
+   ]
 const  CACHE_NAME = "cache-vpdoc";
 
-// Installation du service worker
 self.addEventListener("install", event => {
-    // Activer immédiatement le nouveau service worker
-    self.skipWaiting();
+    event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+        cache.addAll(ASSETS);
+    })
+    )
 });
 
 // Activation du service worker
 self.addEventListener("activate", event => {
     console.log(`${CACHE_NAME} est prêt à gérer les requêtes !`);
 
-    // Suppression des caches obsolètes pour éviter de saturer l'espace de stockage
+    // Suppression des caches obsolètes
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
@@ -26,30 +32,18 @@ self.addEventListener("activate", event => {
 });
 
 
-self.addEventListener("fetch", event => {
+
+self.addEventListener('fetch', event => {
     event.respondWith(
-        caches.match(event.request).then(response => {
-            // Serve from cache first
-            const fetchPromise = fetch(event.request).then(networkResponse => {
-                if (networkResponse && networkResponse.status === 200) {
-                    // Update the cache with a clone of the network response
-                    return caches.open(CACHE_NAME).then(cache => {
-                        cache.put(event.request, networkResponse.clone());
-                        return networkResponse;
-                    });
-                }
-                return networkResponse;
+        caches.match(event.request).then(cachedResponse => {
+            var networkUpdate = fetch(event.request).then(networkResponse => {
+                caches.open(CACHE_NAME).then(cache => cache.put(event.request, networkResponse));
+                return networkResponse.clone();
             }).catch(error => {
-                console.error('Fetch failed:', error);
+                console.error('La récupération des données a échoué :', error);
                 throw error;
             });
-
-            // Retourne la réponse du cache si elle existe, sinon la réponse du réseau
-            return response || fetchPromise;
-        }).catch(error => {
-            console.error('Cache match failed:', error);
-            throw error;
+            return cachedResponse || networkUpdate;
         })
     );
 });
-
