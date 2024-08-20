@@ -32,18 +32,17 @@ self.addEventListener("activate", event => {
 });
 
 
-
-self.addEventListener('fetch', event => {
+// enregistre les requêtes réseau dans le cache et les renvoie toujours depuis le cache
+self.addEventListener("fetch", event => {
     event.respondWith(
-        caches.match(event.request).then(cachedResponse => {
-            var networkUpdate = fetch(event.request).then(networkResponse => {
-                caches.open(CACHE_NAME).then(cache => cache.put(event.request, networkResponse));
-                return networkResponse.clone();
-            }).catch(error => {
-                console.error('La récupération des données a échoué :', error);
-                throw error;
-            });
-            return cachedResponse || networkUpdate;
+        caches.match(event.request).then(response => {
+            if (response) {
+                console.log(`Récupération de ${event.request.url} depuis le cache.`);
+                return response;
+            }
+
+            console.log(`Récupération de ${event.request.url} depuis le réseau.`);
+            return fetch(event.request);
         })
     );
 });
