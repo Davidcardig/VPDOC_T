@@ -4,13 +4,9 @@ import { autoUpdater } from 'electron-updater';
 
 
 app.whenReady().then(() => {
-  // Crée une fenêtre principale
+  // Crée une fenêtre lorsque l'application est prête.
   createWindow();
 
-  app.on("activate", function () {
-    // Vérifie s'il n'y a pas de fenêtre ouverte et en crée une nouvelle si nécessaire
-    if (BrowserWindow.getAllWindows().length == 0) createWindow();
-  });
   // Vérifie les mises à jour de l'application
   autoUpdater.checkForUpdates()
 
@@ -87,7 +83,7 @@ function createWindow() {
 
   win.loadFile('./index.html')
 
-  win.webContents.openDevTools();
+  //win.webContents.openDevTools();
 
   win.webContents.on('did-finish-load', () => {
     win?.webContents.send('main-process-message', (new Date).toLocaleString());

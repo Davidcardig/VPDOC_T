@@ -17,10 +17,7 @@ const fetchPage = async (slug: string | undefined) => {
 
         return {
             ...data[0],
-            content: {
-                ...data[0].content,
-                rendered: Content // Mise à jour du contenu nettoyé et assaini
-            },
+            content: {...data[0].content, rendered: Content },
         };
 
 

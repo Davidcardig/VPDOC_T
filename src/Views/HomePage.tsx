@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import HomeData from '../Models/HomeData.json';
+import HomeData from '../Models/Data.tsx';
 import fleche_bas from '../assets/img/fleche_bas.png';
 import fleche_droite from '../assets/img/fleche_droite.png';
 

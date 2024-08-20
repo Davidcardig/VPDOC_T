@@ -50,21 +50,18 @@ const DocumentPageViewModel = ({ slugProp }: DocumentPageProps) => {
                     div.innerHTML = response.content.rendered;
                     const imageNames = extractor.extractImageNames(div.innerText);
 
-                    let fetchedImageData = null;
+                    let ImageData = undefined;
                     if (imageNames) {
-                        fetchedImageData = await extractor.fetchImageData();
-                        if (fetchedImageData) {
-                            setImageData(fetchedImageData.map((url, index) => ({ url, title: imageNames[index] })));
+                        ImageData = await extractor.fetchImageData();
+                        if (ImageData) {
+                            setImageData(ImageData.map((url, index) => ({ url, title: imageNames[index] })));
                         }
                     }
 
                     const slugExtractor = new SlugFromContent((links) => {
                         setData((data) => {
                             if (data) {
-                                return {
-                                    ...data,
-                                    links
-                                };
+                                return {...data, links};
                             }
                             return data;
                         });
